@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2EA6418C2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6418B2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift */; };
+		2EA6418E2B952131001D09E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6418D2B952131001D09E4 /* ContentView.swift */; };
+		2EA641902B952133001D09E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EA6418F2B952133001D09E4 /* Assets.xcassets */; };
+		2EA641932B952133001D09E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EA641922B952133001D09E4 /* Preview Assets.xcassets */; };
+		2EA6419D2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6419C2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift */; };
+		2EA641A72B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA641A62B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift */; };
+		2EA641A92B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA641A82B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2EA641992B952133001D09E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EA641802B952130001D09E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2EA641872B952130001D09E4;
+			remoteInfo = "Chronic Illness Manager | Andrew Towell 12 Major";
+		};
+		2EA641A32B952133001D09E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EA641802B952130001D09E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2EA641872B952130001D09E4;
+			remoteInfo = "Chronic Illness Manager | Andrew Towell 12 Major";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2EA641882B952131001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chronic Illness Manager | Andrew Towell 12 Major.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EA6418B2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift"; sourceTree = "<group>"; };
+		2EA6418D2B952131001D09E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2EA6418F2B952133001D09E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2EA641922B952133001D09E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2EA641982B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chronic Illness Manager | Andrew Towell 12 MajorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EA6419C2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift"; sourceTree = "<group>"; };
+		2EA641A22B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chronic Illness Manager | Andrew Towell 12 MajorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EA641A62B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift"; sourceTree = "<group>"; };
+		2EA641A82B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2EA641852B952130001D09E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EA641952B952133001D09E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EA6419F2B952133001D09E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2EA6417F2B952130001D09E4 = {
+			isa = PBXGroup;
+			children = (
+				2EA6418A2B952131001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major */,
+				2EA6419B2B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorTests */,
+				2EA641A52B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorUITests */,
+				2EA641892B952131001D09E4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2EA641892B952131001D09E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2EA641882B952131001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major.app */,
+				2EA641982B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorTests.xctest */,
+				2EA641A22B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2EA6418A2B952131001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major */ = {
+			isa = PBXGroup;
+			children = (
+				2EA6418B2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift */,
+				2EA6418D2B952131001D09E4 /* ContentView.swift */,
+				2EA6418F2B952133001D09E4 /* Assets.xcassets */,
+				2EA641912B952133001D09E4 /* Preview Content */,
+			);
+			path = "Chronic Illness Manager | Andrew Towell 12 Major";
+			sourceTree = "<group>";
+		};
+		2EA641912B952133001D09E4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				2EA641922B952133001D09E4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2EA6419B2B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorTests */ = {
+			isa = PBXGroup;
+			children = (
+				2EA6419C2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift */,
+			);
+			path = "Chronic Illness Manager | Andrew Towell 12 MajorTests";
+			sourceTree = "<group>";
+		};
+		2EA641A52B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2EA641A62B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift */,
+				2EA641A82B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift */,
+			);
+			path = "Chronic Illness Manager | Andrew Towell 12 MajorUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2EA641872B952130001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2EA641AC2B952133001D09E4 /* Build configuration list for PBXNativeTarget "Chronic Illness Manager | Andrew Towell 12 Major" */;
+			buildPhases = (
+				2EA641842B952130001D09E4 /* Sources */,
+				2EA641852B952130001D09E4 /* Frameworks */,
+				2EA641862B952130001D09E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Chronic Illness Manager | Andrew Towell 12 Major";
+			productName = "Chronic Illness Manager | Andrew Towell 12 Major";
+			productReference = 2EA641882B952131001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2EA641972B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2EA641AF2B952133001D09E4 /* Build configuration list for PBXNativeTarget "Chronic Illness Manager | Andrew Towell 12 MajorTests" */;
+			buildPhases = (
+				2EA641942B952133001D09E4 /* Sources */,
+				2EA641952B952133001D09E4 /* Frameworks */,
+				2EA641962B952133001D09E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2EA6419A2B952133001D09E4 /* PBXTargetDependency */,
+			);
+			name = "Chronic Illness Manager | Andrew Towell 12 MajorTests";
+			productName = "Chronic Illness Manager | Andrew Towell 12 MajorTests";
+			productReference = 2EA641982B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2EA641A12B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2EA641B22B952133001D09E4 /* Build configuration list for PBXNativeTarget "Chronic Illness Manager | Andrew Towell 12 MajorUITests" */;
+			buildPhases = (
+				2EA6419E2B952133001D09E4 /* Sources */,
+				2EA6419F2B952133001D09E4 /* Frameworks */,
+				2EA641A02B952133001D09E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2EA641A42B952133001D09E4 /* PBXTargetDependency */,
+			);
+			name = "Chronic Illness Manager | Andrew Towell 12 MajorUITests";
+			productName = "Chronic Illness Manager | Andrew Towell 12 MajorUITests";
+			productReference = 2EA641A22B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2EA641802B952130001D09E4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					2EA641872B952130001D09E4 = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					2EA641972B952133001D09E4 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 2EA641872B952130001D09E4;
+					};
+					2EA641A12B952133001D09E4 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 2EA641872B952130001D09E4;
+					};
+				};
+			};
+			buildConfigurationList = 2EA641832B952130001D09E4 /* Build configuration list for PBXProject "Chronic Illness Manager | Andrew Towell 12 Major" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2EA6417F2B952130001D09E4;
+			productRefGroup = 2EA641892B952131001D09E4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2EA641872B952130001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major */,
+				2EA641972B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorTests */,
+				2EA641A12B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2EA641862B952130001D09E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EA641932B952133001D09E4 /* Preview Assets.xcassets in Resources */,
+				2EA641902B952133001D09E4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EA641962B952133001D09E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EA641A02B952133001D09E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2EA641842B952130001D09E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EA6418E2B952131001D09E4 /* ContentView.swift in Sources */,
+				2EA6418C2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EA641942B952133001D09E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EA6419D2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EA6419E2B952133001D09E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EA641A72B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift in Sources */,
+				2EA641A92B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2EA6419A2B952133001D09E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2EA641872B952130001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major */;
+			targetProxy = 2EA641992B952133001D09E4 /* PBXContainerItemProxy */;
+		};
+		2EA641A42B952133001D09E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2EA641872B952130001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major */;
+			targetProxy = 2EA641A32B952133001D09E4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2EA641AA2B952133001D09E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2EA641AB2B952133001D09E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2EA641AD2B952133001D09E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Chronic Illness Manager | Andrew Towell 12 Major/Preview Content\"";
+				DEVELOPMENT_TEAM = L495DCG5CF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Andrew-Towell.Chronic-Illness-Manager---Andrew-Towell-12-Major";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2EA641AE2B952133001D09E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Chronic Illness Manager | Andrew Towell 12 Major/Preview Content\"";
+				DEVELOPMENT_TEAM = L495DCG5CF;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Andrew-Towell.Chronic-Illness-Manager---Andrew-Towell-12-Major";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2EA641B02B952133001D09E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L495DCG5CF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Andrew-Towell.Chronic-Illness-Manager---Andrew-Towell-12-MajorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chronic Illness Manager | Andrew Towell 12 Major.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chronic Illness Manager | Andrew Towell 12 Major";
+			};
+			name = Debug;
+		};
+		2EA641B12B952133001D09E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L495DCG5CF;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Andrew-Towell.Chronic-Illness-Manager---Andrew-Towell-12-MajorTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chronic Illness Manager | Andrew Towell 12 Major.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chronic Illness Manager | Andrew Towell 12 Major";
+			};
+			name = Release;
+		};
+		2EA641B32B952133001D09E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L495DCG5CF;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Andrew-Towell.Chronic-Illness-Manager---Andrew-Towell-12-MajorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Chronic Illness Manager | Andrew Towell 12 Major";
+			};
+			name = Debug;
+		};
+		2EA641B42B952133001D09E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L495DCG5CF;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Andrew-Towell.Chronic-Illness-Manager---Andrew-Towell-12-MajorUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Chronic Illness Manager | Andrew Towell 12 Major";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2EA641832B952130001D09E4 /* Build configuration list for PBXProject "Chronic Illness Manager | Andrew Towell 12 Major" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2EA641AA2B952133001D09E4 /* Debug */,
+				2EA641AB2B952133001D09E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2EA641AC2B952133001D09E4 /* Build configuration list for PBXNativeTarget "Chronic Illness Manager | Andrew Towell 12 Major" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2EA641AD2B952133001D09E4 /* Debug */,
+				2EA641AE2B952133001D09E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2EA641AF2B952133001D09E4 /* Build configuration list for PBXNativeTarget "Chronic Illness Manager | Andrew Towell 12 MajorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2EA641B02B952133001D09E4 /* Debug */,
+				2EA641B12B952133001D09E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2EA641B22B952133001D09E4 /* Build configuration list for PBXNativeTarget "Chronic Illness Manager | Andrew Towell 12 MajorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2EA641B32B952133001D09E4 /* Debug */,
+				2EA641B42B952133001D09E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2EA641802B952130001D09E4 /* Project object */;
+}
