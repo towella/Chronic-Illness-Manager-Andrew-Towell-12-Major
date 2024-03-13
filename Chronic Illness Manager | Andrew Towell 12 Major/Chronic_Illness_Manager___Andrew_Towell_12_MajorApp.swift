@@ -3,10 +3,12 @@
 import SwiftUI
 
 @main
-struct ___PACKAGENAME:identifier___App: App {
+struct Chronic_Illness_Manager___Andrew_Towell_12_MajorApp: App {
+    @StateObject var manager = IllnessManagerViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ChronicIllnessManagerView(manager: manager)
         }
     }
 }

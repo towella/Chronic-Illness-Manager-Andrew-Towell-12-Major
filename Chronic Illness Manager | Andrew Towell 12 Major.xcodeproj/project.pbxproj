@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E5061AB2B9A66A6002F4A40 /* ManagerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5061AA2B9A66A6002F4A40 /* ManagerModel.swift */; };
+		2E5061AD2B9A6797002F4A40 /* IllnessManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E5061AC2B9A6797002F4A40 /* IllnessManagerViewModel.swift */; };
 		2EA6418C2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6418B2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift */; };
-		2EA6418E2B952131001D09E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6418D2B952131001D09E4 /* ContentView.swift */; };
+		2EA6418E2B952131001D09E4 /* ChronicIllnessManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6418D2B952131001D09E4 /* ChronicIllnessManagerView.swift */; };
 		2EA641902B952133001D09E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EA6418F2B952133001D09E4 /* Assets.xcassets */; };
 		2EA641932B952133001D09E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EA641922B952133001D09E4 /* Preview Assets.xcassets */; };
 		2EA6419D2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6419C2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift */; };
@@ -34,9 +36,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E5061AA2B9A66A6002F4A40 /* ManagerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerModel.swift; sourceTree = "<group>"; };
+		2E5061AC2B9A6797002F4A40 /* IllnessManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllnessManagerViewModel.swift; sourceTree = "<group>"; };
 		2EA641882B952131001D09E4 /* Chronic Illness Manager | Andrew Towell 12 Major.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chronic Illness Manager | Andrew Towell 12 Major.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EA6418B2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift"; sourceTree = "<group>"; };
-		2EA6418D2B952131001D09E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2EA6418D2B952131001D09E4 /* ChronicIllnessManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChronicIllnessManagerView.swift; sourceTree = "<group>"; tabWidth = 4; };
 		2EA6418F2B952133001D09E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2EA641922B952133001D09E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2EA641982B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chronic Illness Manager | Andrew Towell 12 MajorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,9 +99,11 @@
 			isa = PBXGroup;
 			children = (
 				2EA6418B2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift */,
-				2EA6418D2B952131001D09E4 /* ContentView.swift */,
+				2EA6418D2B952131001D09E4 /* ChronicIllnessManagerView.swift */,
 				2EA6418F2B952133001D09E4 /* Assets.xcassets */,
 				2EA641912B952133001D09E4 /* Preview Content */,
+				2E5061AA2B9A66A6002F4A40 /* ManagerModel.swift */,
+				2E5061AC2B9A6797002F4A40 /* IllnessManagerViewModel.swift */,
 			);
 			path = "Chronic Illness Manager | Andrew Towell 12 Major";
 			sourceTree = "<group>";
@@ -257,8 +263,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EA6418E2B952131001D09E4 /* ContentView.swift in Sources */,
+				2EA6418E2B952131001D09E4 /* ChronicIllnessManagerView.swift in Sources */,
+				2E5061AD2B9A6797002F4A40 /* IllnessManagerViewModel.swift in Sources */,
 				2EA6418C2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift in Sources */,
+				2E5061AB2B9A66A6002F4A40 /* ManagerModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,11 +433,13 @@
 				DEVELOPMENT_TEAM = L495DCG5CF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronic Illness Manager";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,11 +464,13 @@
 				DEVELOPMENT_TEAM = L495DCG5CF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Chronic Illness Manager";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
