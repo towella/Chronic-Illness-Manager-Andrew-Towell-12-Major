@@ -20,11 +20,26 @@ struct ChronicIllnessManagerView: View {
             let buttonFill = Color(red: 0, green: 0, blue: 0)
             let lightOutline = Color(red: 119/255, green: 119/255, blue: 119/255)
         }
+        struct Widget {
+            let cornerRadius: CGFloat = 12
+            let lineWidth: CGFloat = 2
+            let shadowRadius: CGFloat = 15
+        }
     }
     
     
-    // MARK: -- MAIN MENU --
+    // MARK: -- BODY --
     var body: some View {
+        mainMenu
+    }
+    
+    
+    // MARK: -- SCREENS --
+    
+    
+    
+    // MARK: Main Menu
+    private var mainMenu: some View {
         NavigationStack {
             VStack {
                 scrollBody
@@ -41,7 +56,7 @@ struct ChronicIllnessManagerView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 Spacer()
-                navButton(icon: "gearshape", destination: AnyView(settings))
+                navButton(icon: "gearshape") {settings}
             }
             .padding(.horizontal)
             
@@ -51,18 +66,15 @@ struct ChronicIllnessManagerView: View {
     }
     
     private var dayPlanner: some View {
-        let cornerRadius: CGFloat = 12
-        let lineWidth: CGFloat = 2
-        let shadowRadius: CGFloat = 15
-        
+
         return ZStack {
-            RoundedRectangle(cornerRadius: cornerRadius)
+            RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
                 .foregroundColor(Constants.Colours().lightBG)
             
-            RoundedRectangle(cornerRadius: cornerRadius)
-                .strokeBorder(lineWidth: lineWidth)
+            RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
+                .strokeBorder(lineWidth: Constants.Widget().lineWidth)
                 .foregroundColor(Constants.Colours().lightOutline)
-                .shadow(radius: shadowRadius)
+                .shadow(radius: Constants.Widget().shadowRadius)
             VStack {
                 Text("12am --------------------------------------")
                 Spacer()
@@ -81,23 +93,21 @@ struct ChronicIllnessManagerView: View {
         // Bottom Buttons
         HStack {
             Spacer()
-            navButton(icon: "folder", destination: AnyView(files))
+            navButton(icon: "folder") {files}
             Spacer()
-            navButton(icon: "calendar", destination: AnyView(calendar))
+            navButton(icon: "calendar") {calendar}
             Spacer()
-            navButton(icon: "plus.app", destination: AnyView(addLog))
+            navButton(icon: "plus.app") {addLog}
             Spacer()
-            navButton(icon: "list.bullet", destination: AnyView(logHistory))
+            navButton(icon: "list.bullet") {logHistory}
             Spacer()
-            navButton(icon: "pill", destination: AnyView(medicationTimetable))
+            navButton(icon: "pill") {medicationTimetable}
             Spacer()
         }
         .background(Constants.Colours().darkPurple)
         .shadow(radius: 20)
     }
     
-    
-    // MARK: -- OTHER SCREENS --
     
     // MARK: Settings
     private var settings: some View {
@@ -122,6 +132,7 @@ struct ChronicIllnessManagerView: View {
             .background(Constants.Colours().lightPurple)
     }
     
+    
     // MARK: Files
     private var files: some View {
         VStack {
@@ -144,6 +155,7 @@ struct ChronicIllnessManagerView: View {
             .navigationTitle("Illness Records")  // title for screen
             .background(Constants.Colours().lightPurple)
     }
+    
     
     // MARK: Calendar
     private var calendar: some View {
@@ -168,6 +180,7 @@ struct ChronicIllnessManagerView: View {
             .background(Constants.Colours().lightPurple)
     }
     
+    
     // MARK: Add Log
     private var addLog: some View {
         VStack {
@@ -190,6 +203,7 @@ struct ChronicIllnessManagerView: View {
             .navigationTitle("New Log")  // title for screen
             .background(Constants.Colours().lightPurple)
     }
+    
     
     // MARK: Log History
     private var logHistory: some View {
@@ -214,6 +228,7 @@ struct ChronicIllnessManagerView: View {
             .background(Constants.Colours().lightPurple)
     }
     
+    
     // MARK: Medication Timetable
     private var medicationTimetable: some View {
         VStack {
@@ -229,21 +244,76 @@ struct ChronicIllnessManagerView: View {
             // Scroll section
             ScrollView {
                 /// * main content here *
+                Button(action: {manager.saveMedTable()}, label: {
+                    Text("Save Test")
+                })
+                
+                // create timetable UI
+                LazyVGrid(columns: [GridItem(spacing: 0), GridItem(spacing: 0)], spacing: 0) {
+                    ForEach (manager.medTimetable.days.indices, id: \.self) {day in
+                        let dayAlerts = manager.medTimetable.days[day]
+                        // Day box
+                        widgetBox {VStack{
+                            // title and delete button
+                            HStack {
+                                Text("Day \(String(day + 1))")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                Spacer()
+                                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {Image(systemName: "clear")})
+                                    .foregroundColor(Constants.Colours().buttonFill)
+                            }
+                            
+                            // med alerts list and add alert button
+                            VStack {
+                                alertList(dayAlerts)
+                                
+                                // TODO: temporary destination
+                                navButton(icon: "plus.square.dashed") {addAlert}
+                                    .imageScale(.small)
+                            }
+                            
+                        }}
+                        
+                    }
+                        .padding(5)
+                }
             }
-            
-            Spacer() // take up all space
         }
-            .navigationTitle("Medication Timetable")  // title for screen
+            .navigationTitle("Med Timetable")  // title for screen
             .background(Constants.Colours().lightPurple)
+    }
+    
+    private func alertList(_ alerts: Array<ManagerModel.MedicationAlert>) -> some View {
+        return ForEach(alerts.indices, id: \.self) { alert in
+            Rectangle()
+        }
+    }
+    
+    private var addAlert: some View {
+        VStack{
+            // Fill Up Header Bar
+            HStack {
+                Spacer()
+            }
+            .padding(4)
+            .background(Constants.Colours().darkPurple)
+            .shadow(radius: 20)
+            
+            Text("YIPPEEEEEEE")
+            Spacer()
+        }
+        .navigationTitle("Add Med Alert")  // title for screen
+        .background(Constants.Colours().lightPurple)
     }
     
     
     // MARK: -- STRUCTS --
     
     // creates a navigation link with a given icon and destination view
-    private struct navButton: View {
+    private struct navButton<Destination: View>: View {
         var icon: String  // icon for button
-        var destination: AnyView  // provide a destination view to open
+        @ViewBuilder var destination: Destination  // provide a destination view to open
         // create button as navlink
         var body: some View {
             NavigationLink(
@@ -255,6 +325,27 @@ struct ChronicIllnessManagerView: View {
                 })
         }
     }
+    
+    private struct widgetBox<Content: View>: View {
+        @ViewBuilder let content: Content
+        var body: some View {
+            ZStack {
+                RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
+                    .foregroundColor(Constants.Colours().lightBG)
+                
+                RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
+                    .strokeBorder(lineWidth: Constants.Widget().lineWidth)
+                    .foregroundColor(Constants.Colours().lightOutline)
+                    .shadow(radius: Constants.Widget().shadowRadius)
+                
+                // Box Content
+                content
+                    .padding()
+            }
+        }
+    }
+    
+    
     
 }
 
