@@ -46,5 +46,19 @@ class IllnessManagerViewModel: ObservableObject {
         save(manager.medTimetable, to: medTimetableURL)
     }
     
+    // add day to med table
+    func addDay() {
+        manager.addDay()
+        saveMedTable()
+    }
+    
+    func delDay(_ index: Int) {
+        // if within acceptable range, delete day
+        if index <= medTimetable.days.count {
+            manager.delDay(index)
+            saveMedTable()
+        }
+    }
+    
     
 }

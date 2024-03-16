@@ -19,6 +19,14 @@ struct ManagerModel {
     
     // MARK: -- MEDICATION TIMETABLE --
     
+    mutating func addDay() {
+        medTimetable.days.append([])
+    }
+    
+    mutating func delDay(_ index: Int) {
+        medTimetable.days.remove(at: index)
+    }
+    
     struct MedicationTimetable: Codable {
         // declare variable types before init
         var days: [[MedicationAlert]] // list of lists of med Alerts [day, [medAlert, ...], ...]
@@ -45,7 +53,7 @@ struct ManagerModel {
             if loadDefault {
                 // LOAD DEFAULT TIMETABLE HERE
                 days = []
-                for _ in 0..<7 {days.append([MedicationAlert(id: 1, name: "Waa", day: 2, time: "12:00", backupTime: "12:30", notes: "Weewooo")])}
+                for _ in 0..<7 {days.append([MedicationAlert(id: 1, name: "Waaaaaaaa", day: 2, time: "12:00", backupTime: "12:30", notes: "Weewooo")])}
                 print("Loaded default")
             }
         }
