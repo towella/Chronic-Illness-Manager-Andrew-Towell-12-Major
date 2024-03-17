@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 // MARK: -- MED TIMETABLE --
 struct MedicationTimetable: View {
     // observed object (view model)
@@ -28,18 +27,19 @@ struct MedicationTimetable: View {
             ScrollView {
                 // create timetable UI
                 LazyVGrid(columns: [GridItem(spacing: 0), GridItem(spacing: 0)], spacing: 0) {
-                    ForEach (manager.medTimetable.days.indices, id: \.self) {day in
-                        let dayAlerts = manager.medTimetable.days[day]
+                    ForEach (manager.medTimetable.days.indices, id: \.self) {dayIndex in
+                        let day = dayIndex + 1
+                        let dayAlerts = manager.medTimetable.days[dayIndex]
                         
                         // Day box
                         widgetBox {VStack{
                             // title and delete button
                             HStack {
-                                Text("Day \(String(day + 1))")
+                                Text("Day \(String(day))")
                                     .font(.title3)
                                     .fontWeight(.bold)
                                 Spacer()
-                                Button(action: {manager.delDay(day)}, label: {Image(systemName: "clear")})
+                                Button(action: {manager.delDay(dayIndex)}, label: {Image(systemName: "clear")})
                                     .foregroundColor(Constants.Colours().buttonFill)
                             }
                             
@@ -48,7 +48,7 @@ struct MedicationTimetable: View {
                                 alertList(dayAlerts)
                                 
                                 // TODO: temporary destination
-                                navButton(icon: "plus.square.dashed") {AddAlert()}
+                                navButton(icon: "plus.square.dashed") {AddAlert(manager: manager, day: day)}
                                     .imageScale(.small)
                                     .padding(.top, 1)
                                 
@@ -89,17 +89,20 @@ struct MedicationTimetable: View {
 // MARK: -- ADD ALERT --
 // add alert screen
 struct AddAlert: View {
+    // observed object (view model)
+    @ObservedObject var manager: IllnessManagerViewModel
+    
     enum FocusedField {
         case name, notes
     }
-    
     // state variables
     @State var name: String = ""
-    @State var day: Int = 0  // TODO: Set starting day
+    @State var day: Int
     @State var time = Date()
     @State var backupTime = Date()
     @State var notes: String = ""
     @FocusState var focusedField: FocusedField?
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack {
@@ -111,55 +114,62 @@ struct AddAlert: View {
             .background(Constants.Colours().darkPurple)
             .shadow(radius: 20)
             
-            HStack {
-                Text("New Alert")
-                    .font(.title3)
-                    .fontWeight(.bold)
-                    .padding([.top, .leading, .trailing])
-                Spacer()
-            }
-            
             // screen body
-            Form {
-                // widgets
-                Section(header: Text("General Info")) {
-                    widgetBox {
-                        HStack {Text("Medication Name")
-                            TextField("Alert title...", text: $name)
-                                .focused($focusedField, equals: .name)
-                        }}
-                    .padding(.top)
-                    widgetBox {
-                        HStack {Text("Day:  \(day)")
-                            Spacer()
-                        }}
-                    widgetBox {
-                        HStack {Text("Time")
-                            DatePicker("", selection: $time,
-                                       displayedComponents: .hourAndMinute)
-                        }}
-                    widgetBox {
-                        HStack {
-                            Text("Backup Time")
-                            DatePicker("", selection: $backupTime, displayedComponents: .hourAndMinute)
-                        }}
-                    .padding(.bottom)
-                }
-                
-                // notes
-                Section(header: Text("Notes")) {
-                    TextField("Notes...", text: $notes)
-                        .focused($focusedField, equals: .notes)
-                }
-                
-                // nav buttons
+            ScrollView {
+                // Title
                 HStack {
-                    Button(action: {}, label: {Text("Cancel")})
+                    Text("New Alert")
+                        .font(.title3)
+                        .fontWeight(.bold)
+                        .padding([.top, .leading, .trailing])
                     Spacer()
-                    Button(action: {}, label: {Text("Create")})
                 }
+                
+                // widgets
+                widgetBox {
+                    HStack {Text("Medication Name")
+                        TextField("Alert title...", text: $name)
+                            .focused($focusedField, equals: .name)
+                    }}
+                .padding(.top)
+                widgetBox {
+                    HStack {Text("Day:  \(day)")
+                        Spacer()
+                    }}
+                widgetBox {
+                    HStack {Text("Time")
+                        DatePicker("", selection: $time,
+                                   displayedComponents: .hourAndMinute)
+                    }}
+                widgetBox {
+                    HStack {
+                        Text("Backup Time")
+                        DatePicker("", selection: $backupTime, displayedComponents: .hourAndMinute)
+                    }}
+                widgetBox {
+                    VStack {
+                        HStack {
+                            Text("Notes")
+                            Spacer()
+                        }
+                        TextField("Notes...", text: $notes, axis: .vertical)
+                            .focused($focusedField, equals: .notes)
+                            .lineLimit(8, reservesSpace: true)
+                    }
+                }
+                
+                // form buttons
+                HStack {
+                    Button(action: {dismiss()}, label: {Text("Cancel")})
+                    Spacer()
+                    widgetBox {Button(action: {createAlert()}, label: {Text("Create")})}
+                        .frame(width: 130, height: 30)
+                }
+                .padding(.vertical)
                 .foregroundStyle(Constants.Colours().buttonFill)
+                
             }
+            .padding()
             .scrollContentBackground(.hidden)  // hide grey form background colour
             .textFieldStyle(.roundedBorder)
             .toolbar {
@@ -177,10 +187,19 @@ struct AddAlert: View {
         .navigationTitle("New Med Alert")  // title for screen
         .background(Constants.Colours().lightPurple)
     }
+    
+    // MARK: create alert
+    private func createAlert() {
+        // provide alert data to manager
+        manager.createAlert(name: name, day: day, time: time, backupTime: backupTime, notes: notes)
+        // return to timetable screen
+        dismiss()
+    }
 }
 
 
 
 #Preview {
-    MedicationTimetable(manager: IllnessManagerViewModel())
+    //MedicationTimetable(manager: IllnessManagerViewModel())
+    AddAlert(manager: IllnessManagerViewModel(), day: 3)
 }

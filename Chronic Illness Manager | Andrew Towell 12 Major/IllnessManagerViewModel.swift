@@ -56,8 +56,15 @@ class IllnessManagerViewModel: ObservableObject {
         // if within acceptable range, delete day
         if index <= medTimetable.days.count {
             manager.delDay(index)
-            saveMedTable()
+            saveMedTable()  // save to persistent memory
         }
+    }
+    
+    func createAlert(name: String, day: Int, time: Date, backupTime: Date, notes: String) {
+        
+        // data validation not required as erronous input is not possible with given input field parameters
+        manager.createAlert(name: name, day: day, time: time, backupTime: backupTime, notes: notes)
+        saveMedTable() // save to persistent memory
     }
     
     

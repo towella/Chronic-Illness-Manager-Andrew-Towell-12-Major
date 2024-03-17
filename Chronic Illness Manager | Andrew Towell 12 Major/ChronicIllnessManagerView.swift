@@ -54,15 +54,15 @@ struct MainMenu: View {
                 .foregroundColor(Constants.Colours().lightOutline)
                 .shadow(radius: Constants.Widget().shadowRadius)
             VStack {
-                Text("12am --------------------------------------")
+                Text("12am                                                                 ")
                 Spacer()
-                Text("06am --------------------------------------")
+                Text("06am                                                                 ")
                 Spacer()
-                Text("Noon --------------------------------------")
+                Text("Noon                                                                 ")
                 Spacer()
-                Text("06pm --------------------------------------")
+                Text("06pm                                                                 ")
                 Spacer()
-                Text("12pm --------------------------------------")
+                Text("12pm                                                                 ")
             }.padding(.vertical)
         }.padding(.horizontal)
     }
@@ -79,7 +79,7 @@ struct MainMenu: View {
             Spacer()
             navButton(icon: "list.bullet") {LogHistory()}
             Spacer()
-            navButton(icon: "pill") {MedicationTimetable(manager:manager).body}
+            navButton(icon: "pill") {MedicationTimetable(manager: manager).body}
             Spacer()
         }
         .background(Constants.Colours().darkPurple)
