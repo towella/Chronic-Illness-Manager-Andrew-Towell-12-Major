@@ -44,24 +44,6 @@ struct widgetBox<Content: View>: View {
     }
 }
 
-// MARK: -- COLOURED TAB --
-struct colouredTab<Content: View>: View {
-    @ViewBuilder let content: Content
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
-                .foregroundColor(Constants.Colours().colouredTab)
-            
-            RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
-                .strokeBorder(lineWidth: Constants.Widget().lineWidth)
-                .foregroundColor(Constants.Colours().colouredTabBorder)
-                .shadow(radius: Constants.Widget().shadowRadius)
-            
-            content
-                .padding(3)
-        }
-    }
-}
 
 //#Preview {
 //    GeneralStructs()

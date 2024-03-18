@@ -61,10 +61,15 @@ class IllnessManagerViewModel: ObservableObject {
     }
     
     func createAlert(name: String, day: Int, time: Date, backupTime: Date, notes: String) {
-        
         // data validation not required as erronous input is not possible with given input field parameters
         manager.createAlert(name: name, day: day, time: time, backupTime: backupTime, notes: notes)
         saveMedTable() // save to persistent memory
+    }
+    
+    func updateAlert(id: Int, name: String, day: Int, time: Date, backupTime: Date, notes: String) {
+        // data validation not required as erronous input is not possible with given input field parameters
+        manager.updateAlert(id: id, name: name, day: day, time: time, backupTime: backupTime, notes: notes)
+        saveMedTable()  // save to persistent memory
     }
     
     
