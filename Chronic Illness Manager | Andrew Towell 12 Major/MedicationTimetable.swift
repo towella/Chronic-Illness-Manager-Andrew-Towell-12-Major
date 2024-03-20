@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 // MARK: ------ SCREENS -------
 
@@ -18,7 +19,6 @@ struct MedicationTimetable: View {
     
     var body: some View {
         VStack {
-            
             // Fill Up Header Bar
             HStack {
                 Spacer()
@@ -26,17 +26,36 @@ struct MedicationTimetable: View {
             .padding(4)
             .background(Constants.Colours().darkPurple)
             .shadow(radius: 20)
-            
+
             // Scroll section (screen body)
             ScrollView {
+                // TODO: notification test ---------------------------------
+                Button("test") {
+                    let content = UNMutableNotificationContent()
+                    content.title = "Notification title."
+                    content.subtitle = "Notification content."
+                    content.sound = UNNotificationSound.default
+
+
+                    // show this notification five seconds from now
+                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+
+
+                    // choose a random identifier
+                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+                    // add our notification request
+                    UNUserNotificationCenter.current().add(request)
+                }
+                // --------------------------------------------------------
+                
                 // create timetable UI
                 LazyVGrid(columns: [GridItem(spacing: 0), GridItem(spacing: 0)], spacing: 0) {
                     ForEach (manager.medTimetable.days.indices, id: \.self) {dayIndex in
                         let day = dayIndex + 1
                         let dayAlerts = manager.medTimetable.days[dayIndex]
-                        
                         // Day box
-                        widgetBox {VStack{
+                        widgetBox { VStack {
                             // title and delete button
                             HStack {
                                 Text("Day \(String(day))")
@@ -49,14 +68,13 @@ struct MedicationTimetable: View {
                             
                             // med alerts list and add alert button
                             VStack {
+                                // list of alerts
                                 alertList(dayAlerts)
-                                
-                                // TODO: temporary destination
+                                // add alert button
                                 navButton(icon: "plus.square.dashed") {AddAlert(manager: manager, day: day)}
                                     .imageScale(.small)
                                     .padding(.top, 1)
-                                
-                                Spacer() // take up vertical space in row
+                                Spacer() // push everything up
                             }
                         }}
                     }
@@ -76,6 +94,17 @@ struct MedicationTimetable: View {
         }
             .navigationTitle("Med Timetable")  // title for screen
             .background(Constants.Colours().lightPurple)
+            .onAppear(){
+                        print("Checking perms")
+                        // checking for permission
+                        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                            if success {
+                                print("Permission approved!")
+                            } else if let error = error {
+                                print(error.localizedDescription)
+                            }
+                        }
+                    }
     }
     
     // MARK: alert list
@@ -219,14 +248,15 @@ struct UpdateAlert: View {
         case name, notes
     }
     let id: Int
-    // state variables
+    // state alert data variables
     @State var name: String
     @State var day: Int
     @State var time: Date
     @State var backupTime: Date
     @State var notes: String
-    @FocusState var focusedField: FocusedField?
-    @Environment(\.dismiss) private var dismiss
+    @FocusState var focusedField: FocusedField?  // what input is focused
+    @Environment(\.dismiss) private var dismiss  // pop screen from stack of screens (go back a page)
+    @State private var showDelAlert = false  // show confirmation alert for deletion
     
     var body: some View {
         VStack {
@@ -247,6 +277,13 @@ struct UpdateAlert: View {
                         .fontWeight(.bold)
                         .padding(.top)
                     Spacer()
+                    Button(action: {showDelAlert = true}, label: {Image(systemName: "trash")})
+                        .alert("Delete alert", isPresented: $showDelAlert) {
+                                    Button("Cancel", role: .cancel) {}
+                                    Button("Delete", role: .destructive) {delAlert(id)}
+                                }
+                        .foregroundColor(Constants.Colours().buttonFill)
+                        .imageScale(.large)
                 }
                 
                 // widgets
@@ -318,6 +355,14 @@ struct UpdateAlert: View {
         // return to timetable screen
         dismiss()
     }
+    
+    // MARK: del alert
+    private func delAlert(_ id: Int) {
+        // provide id to be deleted to manager
+        manager.delAlert(id)
+        // return to timetable screen
+        dismiss()
+    }
 }
 
 
@@ -351,6 +396,6 @@ struct AlertTab<Content: View, Destination: View>: View {
 
 
 #Preview {
-    //MedicationTimetable(manager: IllnessManagerViewModel())
-    AddAlert(manager: IllnessManagerViewModel(), day: 3)
+    MedicationTimetable(manager: IllnessManagerViewModel())
+    //AddAlert(manager: IllnessManagerViewModel(), day: 3)
 }

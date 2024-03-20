@@ -72,5 +72,11 @@ class IllnessManagerViewModel: ObservableObject {
         saveMedTable()  // save to persistent memory
     }
     
+    func delAlert(_ id: Int) {
+        // data validation not required as erronous input is not possible
+        manager.delAlert(id)
+        saveMedTable()  // save to persistent memory
+    }
+    
     
 }
