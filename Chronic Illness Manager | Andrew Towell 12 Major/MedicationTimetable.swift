@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UserNotifications
 
 // MARK: ------ SCREENS -------
 
@@ -29,26 +28,6 @@ struct MedicationTimetable: View {
 
             // Scroll section (screen body)
             ScrollView {
-                // TODO: notification test ---------------------------------
-                Button("test") {
-                    let content = UNMutableNotificationContent()
-                    content.title = "Notification title."
-                    content.subtitle = "Notification content."
-                    content.sound = UNNotificationSound.default
-
-
-                    // show this notification five seconds from now
-                    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-
-
-                    // choose a random identifier
-                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-                    // add our notification request
-                    UNUserNotificationCenter.current().add(request)
-                }
-                // --------------------------------------------------------
-                
                 // create timetable UI
                 LazyVGrid(columns: [GridItem(spacing: 0), GridItem(spacing: 0)], spacing: 0) {
                     ForEach (manager.medTimetable.days.indices, id: \.self) {dayIndex in
@@ -94,17 +73,6 @@ struct MedicationTimetable: View {
         }
             .navigationTitle("Med Timetable")  // title for screen
             .background(Constants.Colours().lightPurple)
-            .onAppear(){
-                        print("Checking perms")
-                        // checking for permission
-                        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                            if success {
-                                print("Permission approved!")
-                            } else if let error = error {
-                                print(error.localizedDescription)
-                            }
-                        }
-                    }
     }
     
     // MARK: alert list

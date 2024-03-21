@@ -11,9 +11,11 @@ import SwiftUI
 struct MainMenu: View {
     // observed object (view model)
     @ObservedObject var manager: IllnessManagerViewModel
-
+    @State var time = Date()
+    
     var body: some View {
         mainMenu
+        
     }
     
     // MARK: View subsections
@@ -39,6 +41,17 @@ struct MainMenu: View {
             .padding(.horizontal)
             
             dayPlanner
+            
+            // TODO: TEST ---------
+            widgetBox {
+                HStack {Text("Notif test")
+                    DatePicker("", selection: $time,
+                               displayedComponents: .hourAndMinute)
+                }}
+            Button("Set time") {
+                manager.setNotification(time: time, alertName: "Test")
+            }
+            // --------------------
         }
         .background(Constants.Colours().lightPurple)
     }

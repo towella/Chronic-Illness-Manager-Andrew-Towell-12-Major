@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 struct ManagerModel {
     var medTimetable: MedicationTimetable  // declare variable type before initialisation
@@ -81,6 +82,51 @@ struct ManagerModel {
         return a1.time < a2.time
     }
     
+    // checking for notification permissions
+    func checkNotifPerms() {
+        // checking for notifcation permissions
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("Permission approved!")
+            } else if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    // request a notification and set it to particular time (works on 24hr time)
+    func setNotification(time: Date, alertName: String) {
+        // create notification object
+        let content = UNMutableNotificationContent()
+        content.title = "Time to take your " + alertName + "!"
+        content.sound = UNNotificationSound.default
+
+        // convert to 24 hour time
+        let time = time.formatted(date: .omitted, time: .shortened)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        let date = dateFormatter.date(from: time)
+        dateFormatter.dateFormat = "HH:mm"
+        
+        // extract time
+        let date24 = dateFormatter.string(from: date!).components(separatedBy: ":")  // split into hour and minute
+        let hour = Int(date24[0])
+        let minute = Int(date24[1])
+        
+        // set time for notification
+        var datComp = DateComponents()
+        datComp.hour = hour
+        datComp.minute = minute
+        
+        // show notification at given time everyday
+        let trigger = UNCalendarNotificationTrigger(dateMatching: datComp, repeats: false)
+        
+        // choose random identifier
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        // add notification request
+        UNUserNotificationCenter.current().add(request)
+    }
     
     
     struct MedicationTimetable: Codable {

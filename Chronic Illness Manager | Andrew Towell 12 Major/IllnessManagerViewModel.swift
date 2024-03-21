@@ -19,6 +19,9 @@ class IllnessManagerViewModel: ObservableObject {
         if let data = try? Data(contentsOf: medTimetableURL){
             manager = ManagerModel(json: data)
         }
+        // check for notification permissions on init then cue notifications for the day
+        manager.checkNotifPerms()
+        // TODO: manager.setNotifications(hour: 19, minute: 3, alertName: "Med")
     }
     
     // Data structs in data input have to conform to protocol Codable as well!!!!!!!!!
@@ -78,5 +81,8 @@ class IllnessManagerViewModel: ObservableObject {
         saveMedTable()  // save to persistent memory
     }
     
+    func setNotification(time: Date, alertName: String) {
+        manager.setNotification(time: time, alertName: alertName)
+    }
     
 }
