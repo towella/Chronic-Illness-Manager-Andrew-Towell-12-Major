@@ -21,7 +21,6 @@ class IllnessManagerViewModel: ObservableObject {
         }
         // check for notification permissions on init then cue notifications for the day
         manager.checkNotifPerms()
-        // TODO: manager.setNotifications(hour: 19, minute: 3, alertName: "Med")
     }
     
     // Data structs in data input have to conform to protocol Codable as well!!!!!!!!!
@@ -42,6 +41,10 @@ class IllnessManagerViewModel: ObservableObject {
     // computed variable
     var medTimetable: ManagerModel.MedicationTimetable {
         manager.medTimetable
+    }
+    
+    var cycleStart: Date {
+        manager.medTimetable.cycleStart
     }
     
     // save medication timetable
@@ -81,8 +84,17 @@ class IllnessManagerViewModel: ObservableObject {
         saveMedTable()  // save to persistent memory
     }
     
+    func setCycleStart(_ date: Date) {
+        manager.setCycleStart(date)
+        saveMedTable()
+    }
+    
     func setNotification(time: Date, alertName: String) {
         manager.setNotification(time: time, alertName: alertName)
+    }
+    
+    func getDayInCycle() -> Int? {
+        return manager.getDayInCycle()
     }
     
 }

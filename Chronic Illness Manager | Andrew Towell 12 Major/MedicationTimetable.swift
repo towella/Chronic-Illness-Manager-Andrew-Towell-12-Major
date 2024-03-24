@@ -15,6 +15,16 @@ import SwiftUI
 struct MedicationTimetable: View {
     // observed object (view model)
     @ObservedObject var manager: IllnessManagerViewModel
+    // State variables (set default values)
+    @State var cycleStart: Date = Date()
+    @State var showDelAlert = false
+    @State var dayInCycle: Int? = nil
+    
+    init(_ m: IllnessManagerViewModel) {
+        manager = m
+        cycleStart = m.cycleStart
+        dayInCycle = m.getDayInCycle()
+    }
     
     var body: some View {
         VStack {
@@ -28,6 +38,20 @@ struct MedicationTimetable: View {
 
             // Scroll section (screen body)
             ScrollView {
+                widgetBox {
+                    HStack {Text("Cycle Start Date")
+                        // can only pick dates before or including today
+                        DatePicker("", selection: $cycleStart,
+                                   in: ...Date(),
+                                   displayedComponents: .date)
+                        Button("Set") {
+                            updateCycle()
+                        }
+                        Spacer()
+                    }
+                }
+                .padding([.horizontal, .top], 5)
+
                 // create timetable UI
                 LazyVGrid(columns: [GridItem(spacing: 0), GridItem(spacing: 0)], spacing: 0) {
                     ForEach (manager.medTimetable.days.indices, id: \.self) {dayIndex in
@@ -37,14 +61,31 @@ struct MedicationTimetable: View {
                         widgetBox { VStack {
                             // title and delete button
                             HStack {
-                                Text("Day \(String(day))")
-                                    .font(.title3)
-                                    .fontWeight(.bold)
+                                ZStack {
+                                    // highlights which day of cycle we are on
+                                    if dayInCycle == day {
+                                        RoundedRectangle(cornerRadius: 25)
+                                            .foregroundColor(.red)
+                                        Text("Day \(String(day))")
+                                            .font(.title3)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.white)
+                                    // default
+                                    } else {
+                                        Text("Day \(String(day))")
+                                            .font(.title3)
+                                            .fontWeight(.bold)
+                                    }
+                                }
                                 Spacer()
-                                Button(action: {manager.delDay(dayIndex)}, label: {Image(systemName: "clear")})
+                                Button(action: {showDelAlert = true}, label: {Image(systemName: "clear")})
+                                    .alert("Delete day", isPresented: $showDelAlert) {
+                                                Button("Cancel", role: .cancel) {}
+                                                Button("Delete", role: .destructive) {delDay(dayIndex)}
+                                            }
                                     .foregroundColor(Constants.Colours().buttonFill)
                             }
-                            
+
                             // med alerts list and add alert button
                             VStack {
                                 // list of alerts
@@ -62,7 +103,7 @@ struct MedicationTimetable: View {
                     // add day button
                     widgetBox {
                         Button(
-                            action: {manager.addDay()},
+                            action: {addDay()},
                             label: {
                                 Text("+ Add Day").foregroundColor(Constants.Colours().buttonFill)
                     })}
@@ -73,6 +114,10 @@ struct MedicationTimetable: View {
         }
             .navigationTitle("Med Timetable")  // title for screen
             .background(Constants.Colours().lightPurple)
+            .onAppear {
+                cycleStart = manager.cycleStart
+                dayInCycle = manager.getDayInCycle()
+            }
     }
     
     // MARK: alert list
@@ -91,6 +136,21 @@ struct MedicationTimetable: View {
                     backupTime: alertData.backupTime,
                     notes: alertData.notes))
         }
+    }
+    
+    private func updateCycle() {
+        manager.setCycleStart(cycleStart)
+        dayInCycle = manager.getDayInCycle()
+    }
+    
+    private func addDay() {
+        manager.addDay()
+        dayInCycle = manager.getDayInCycle()
+    }
+    
+    private func delDay(_ dayIndex: Int) {
+        manager.delDay(dayIndex)
+        dayInCycle = manager.getDayInCycle()
     }
     
 }
@@ -204,6 +264,7 @@ struct AddAlert: View {
         // return to timetable screen
         dismiss()
     }
+    
 }
 
 
@@ -364,6 +425,6 @@ struct AlertTab<Content: View, Destination: View>: View {
 
 
 #Preview {
-    MedicationTimetable(manager: IllnessManagerViewModel())
+    MedicationTimetable(IllnessManagerViewModel())
     //AddAlert(manager: IllnessManagerViewModel(), day: 3)
 }

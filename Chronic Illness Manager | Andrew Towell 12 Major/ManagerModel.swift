@@ -82,6 +82,31 @@ struct ManagerModel {
         return a1.time < a2.time
     }
     
+    mutating func setCycleStart(_ date: Date) {
+        medTimetable.cycleStart = date
+    }
+    
+    // Returns where in the cycle today is
+    func getDayInCycle() -> Int? {
+        if medTimetable.days.count == 0 {
+            return nil
+            // special case, timeInterval does not register if both dates are the same
+            // must compare date components and ignore time
+        } else if medTimetable.cycleStart.formatted(date: .abbreviated, time: .omitted) == Date().formatted(date: .abbreviated, time: .omitted) {
+            return 1
+        } else {
+            // time interval from start of the day cycle starts on IN MINUTES divided to be in whole days!!!
+            // +2 to account for inclusive of start date and today
+            // TODO: Int rounding does not work properly because not measuring from start of today.
+            var interval = Int(abs(medTimetable.cycleStart.timeIntervalSinceNow/96400)) + 2
+            print(interval)
+            while interval > medTimetable.days.count {
+                interval -= medTimetable.days.count
+            }
+            return interval
+        }
+    }
+    
     // checking for notification permissions
     func checkNotifPerms() {
         // checking for notifcation permissions
@@ -118,7 +143,7 @@ struct ManagerModel {
         datComp.hour = hour
         datComp.minute = minute
         
-        // show notification at given time everyday
+        // show notification at given time (does not repeat every day)
         let trigger = UNCalendarNotificationTrigger(dateMatching: datComp, repeats: false)
         
         // choose random identifier
@@ -127,12 +152,14 @@ struct ManagerModel {
         // add notification request
         UNUserNotificationCenter.current().add(request)
     }
+
     
     
     struct MedicationTimetable: Codable {
         // declare variable types before init
         var days: [[MedicationAlert]] // list of lists of med Alerts [day, [medAlert, ...], ...]
         var nextAlertId: Int  // keeps track of what ids have been used
+        var cycleStart: Date  // reference date for where in the cycle we are
         
         // load in timetable from passed JSON otherwise default to empty 7 days
         init(json: Data?) {
@@ -140,6 +167,7 @@ struct ManagerModel {
             days = []
             for _ in 0..<7 {days.append([])}
             nextAlertId = 0
+            cycleStart = Date()
             
             // attemtp to load timetable
             if json != nil {

@@ -15,7 +15,6 @@ struct MainMenu: View {
     
     var body: some View {
         mainMenu
-        
     }
     
     // MARK: View subsections
@@ -47,9 +46,10 @@ struct MainMenu: View {
                 HStack {Text("Notif test")
                     DatePicker("", selection: $time,
                                displayedComponents: .hourAndMinute)
-                }}
+                }}.padding(.horizontal, 5)
             Button("Set time") {
                 manager.setNotification(time: time, alertName: "Test")
+                print("notif set")
             }
             // --------------------
         }
@@ -92,7 +92,7 @@ struct MainMenu: View {
             Spacer()
             navButton(icon: "list.bullet") {LogHistory()}
             Spacer()
-            navButton(icon: "pill") {MedicationTimetable(manager: manager).body}
+            navButton(icon: "pill") {MedicationTimetable(manager)}
             Spacer()
         }
         .background(Constants.Colours().darkPurple)
