@@ -99,7 +99,7 @@ struct ManagerModel {
             // +2 to account for inclusive of start date and today
             // TODO: Int rounding does not work properly because not measuring from start of today.
             var interval = Int(abs(medTimetable.cycleStart.timeIntervalSinceNow/96400)) + 2
-            print(interval)
+            //print(interval)
             while interval > medTimetable.days.count {
                 interval -= medTimetable.days.count
             }

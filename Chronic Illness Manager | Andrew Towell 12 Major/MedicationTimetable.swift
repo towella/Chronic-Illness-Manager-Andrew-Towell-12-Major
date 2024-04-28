@@ -19,6 +19,7 @@ struct MedicationTimetable: View {
     @State var cycleStart: Date = Date()
     @State var showDelAlert = false
     @State var dayInCycle: Int? = nil
+    @State var dayToDel = 0
     
     init(_ m: IllnessManagerViewModel) {
         manager = m
@@ -57,6 +58,7 @@ struct MedicationTimetable: View {
                     ForEach (manager.medTimetable.days.indices, id: \.self) {dayIndex in
                         let day = dayIndex + 1
                         let dayAlerts = manager.medTimetable.days[dayIndex]
+                        
                         // Day box
                         widgetBox { VStack {
                             // title and delete button
@@ -78,10 +80,13 @@ struct MedicationTimetable: View {
                                     }
                                 }
                                 Spacer()
-                                Button(action: {showDelAlert = true}, label: {Image(systemName: "clear")})
-                                    .alert("Delete day", isPresented: $showDelAlert) {
+                                // must record what day to delete as popup does not show immediately, allowing dayIndex to be changed to the wrong day before deletion occurs.
+                                Button(action: {dayToDel = dayIndex; showDelAlert = true}, 
+                                       label: {Image(systemName: "clear")})
+                                    .alert("Delete day "+String(dayToDel + 1), isPresented: $showDelAlert) {
                                                 Button("Cancel", role: .cancel) {}
-                                                Button("Delete", role: .destructive) {delDay(dayIndex)}
+                                                Button("Delete", role: .destructive) {
+                                                    delDay(dayToDel)}
                                             }
                                     .foregroundColor(Constants.Colours().buttonFill)
                             }
