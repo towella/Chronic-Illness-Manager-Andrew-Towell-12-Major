@@ -14,7 +14,6 @@ struct ManagerModel {
     // initialise model
     init(json: Data?) {
         medTimetable = MedicationTimetable(json: json)
-        print(medTimetable)
     }
     
     
@@ -69,7 +68,6 @@ struct ManagerModel {
         for dayIndex in medTimetable.days.indices {
             for alertIndex in medTimetable.days[dayIndex].indices {
                 if medTimetable.days[dayIndex][alertIndex].id == id {
-                    print(medTimetable.days[dayIndex][alertIndex].id, id)
                     medTimetable.days[dayIndex].remove(at: alertIndex)
                     break
                 }
@@ -95,14 +93,31 @@ struct ManagerModel {
         } else if medTimetable.cycleStart.formatted(date: .abbreviated, time: .omitted) == Date().formatted(date: .abbreviated, time: .omitted) {
             return 1
         } else {
-            // time interval from start of the day cycle starts on IN MINUTES divided to be in whole days!!!
+            let daySeconds: Double = 86400  // number of seconds in a day (must be double to compare with date)
+            var today = Date()  // time right now
+            
+            // extract components of todays date object as ints
+            // https://stackoverflow.com/questions/24070450/how-to-get-the-current-time-as-datetime
+            let calendar = NSCalendar.current
+            let hour = calendar.component(.hour, from: today)
+            let minutes = calendar.component(.minute, from: today)
+            let seconds = calendar.component(.second, from: today)
+            
+            // get raw todays date
+            today += 10*60*60 // convert date to Australian timezone (+10 hours in seconds)
+            today = today - Double(hour * 60 * 60) - Double(minutes * 60) - Double(seconds)  // subtract current time to get date excluding time
+            
+            // time interval from start of the day cycle starts on IN SECONDS divided to be in whole days!!!
             // +2 to account for inclusive of start date and today
             // TODO: Int rounding does not work properly because not measuring from start of today.
-            var interval = Int(abs(medTimetable.cycleStart.timeIntervalSinceNow/96400)) + 2
-            //print(interval)
-            while interval > medTimetable.days.count {
-                interval -= medTimetable.days.count
+            var interval = Int(abs(medTimetable.cycleStart.distance(to: today) / daySeconds)) + 2
+            
+            interval %= medTimetable.days.count  // get remainder after division by cycle length
+            // if interval = cycle length then division will result in 0 when interval should be equal to cycle length
+            if interval == 0 {
+                interval = medTimetable.days.count
             }
+            
             return interval
         }
     }
