@@ -21,8 +21,7 @@
 		2EF0A4A82BA57FB500C837B2 /* GeneralStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4A72BA57FB500C837B2 /* GeneralStructs.swift */; };
 		2EF0A4AA2BA5852000C837B2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4A92BA5852000C837B2 /* Settings.swift */; };
 		2EF0A4AC2BA5855700C837B2 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4AB2BA5855700C837B2 /* Calendar.swift */; };
-		2EF0A4AE2BA585FA00C837B2 /* AddLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4AD2BA585FA00C837B2 /* AddLog.swift */; };
-		2EF0A4B02BA5863700C837B2 /* LogHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4AF2BA5863700C837B2 /* LogHistory.swift */; };
+		2EF0A4B02BA5863700C837B2 /* SymptomLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4AF2BA5863700C837B2 /* SymptomLogger.swift */; };
 		2EF0A4B22BA586CD00C837B2 /* MedicalRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4B12BA586CD00C837B2 /* MedicalRecords.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,8 +60,7 @@
 		2EF0A4A72BA57FB500C837B2 /* GeneralStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralStructs.swift; sourceTree = "<group>"; };
 		2EF0A4A92BA5852000C837B2 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2EF0A4AB2BA5855700C837B2 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
-		2EF0A4AD2BA585FA00C837B2 /* AddLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLog.swift; sourceTree = "<group>"; };
-		2EF0A4AF2BA5863700C837B2 /* LogHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHistory.swift; sourceTree = "<group>"; };
+		2EF0A4AF2BA5863700C837B2 /* SymptomLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymptomLogger.swift; sourceTree = "<group>"; };
 		2EF0A4B12BA586CD00C837B2 /* MedicalRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalRecords.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,8 +115,7 @@
 				2EA6418B2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift */,
 				2EA6418D2B952131001D09E4 /* ChronicIllnessManagerView.swift */,
 				2EF0A4B12BA586CD00C837B2 /* MedicalRecords.swift */,
-				2EF0A4AF2BA5863700C837B2 /* LogHistory.swift */,
-				2EF0A4AD2BA585FA00C837B2 /* AddLog.swift */,
+				2EF0A4AF2BA5863700C837B2 /* SymptomLogger.swift */,
 				2EF0A4AB2BA5855700C837B2 /* Calendar.swift */,
 				2EF0A4A92BA5852000C837B2 /* Settings.swift */,
 				2EF0A4A32BA57EDC00C837B2 /* MedicationTimetable.swift */,
@@ -287,8 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EF0A4AE2BA585FA00C837B2 /* AddLog.swift in Sources */,
-				2EF0A4B02BA5863700C837B2 /* LogHistory.swift in Sources */,
+				2EF0A4B02BA5863700C837B2 /* SymptomLogger.swift in Sources */,
 				2EF0A4A42BA57EDC00C837B2 /* MedicationTimetable.swift in Sources */,
 				2EF0A4AC2BA5855700C837B2 /* Calendar.swift in Sources */,
 				2EF0A4B22BA586CD00C837B2 /* MedicalRecords.swift in Sources */,
@@ -460,7 +456,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Chronic Illness Manager | Andrew Towell 12 Major/Preview Content\"";
 				DEVELOPMENT_TEAM = L495DCG5CF;
 				ENABLE_PREVIEWS = YES;
@@ -472,12 +468,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Andrew-Towell.Chronic-Illness-Manager---Andrew-Towell-12-Major";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -492,7 +488,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Chronic Illness Manager | Andrew Towell 12 Major/Preview Content\"";
 				DEVELOPMENT_TEAM = L495DCG5CF;
 				ENABLE_PREVIEWS = YES;
@@ -504,12 +500,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Andrew-Towell.Chronic-Illness-Manager---Andrew-Towell-12-Major";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

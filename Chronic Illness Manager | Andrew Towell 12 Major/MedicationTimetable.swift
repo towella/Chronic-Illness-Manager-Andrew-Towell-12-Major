@@ -9,8 +9,6 @@ import SwiftUI
 
 // MARK: ------ SCREENS -------
 
-
-
 // MARK: -- MED TIMETABLE --
 struct MedicationTimetable: View {
     // observed object (view model)
@@ -205,6 +203,9 @@ struct AddAlert: View {
                     HStack {Text("Medication Name")
                         TextField("Alert title...", text: $name)
                             .focused($focusedField, equals: .name)
+                            .onChange(of: name) {
+                                name = limitText(upper: 20, str: name)
+                            }
                     }}
                 widgetBox {
                     HStack {Text("Day:  \(day)")
@@ -229,6 +230,9 @@ struct AddAlert: View {
                         TextField("Notes...", text: $notes, axis: .vertical)
                             .focused($focusedField, equals: .notes)
                             .lineLimit(8, reservesSpace: true)
+                            .onChange(of: notes) {
+                                notes = limitText(upper: 20, str: notes)
+                            }
                     }
                 }
                 
@@ -325,6 +329,9 @@ struct UpdateAlert: View {
                     HStack {Text("Medication Name")
                         TextField("Alert title...", text: $name)
                             .focused($focusedField, equals: .name)
+                            .onChange(of: name) {
+                                name = limitText(upper: 20, str: name)
+                            }
                     }}
                 widgetBox {
                     HStack {Text("Day:  \(day)")
@@ -349,6 +356,9 @@ struct UpdateAlert: View {
                         TextField("Notes...", text: $notes, axis: .vertical)
                             .focused($focusedField, equals: .notes)
                             .lineLimit(8, reservesSpace: true)
+                            .onChange(of: notes) {
+                                notes = limitText(upper: 400, str: notes)
+                            }
                     }
                 }
                 
@@ -428,8 +438,6 @@ struct AlertTab<Content: View, Destination: View>: View {
     }
 }
 
-
 #Preview {
     MedicationTimetable(IllnessManagerViewModel())
-    //AddAlert(manager: IllnessManagerViewModel(), day: 3)
 }

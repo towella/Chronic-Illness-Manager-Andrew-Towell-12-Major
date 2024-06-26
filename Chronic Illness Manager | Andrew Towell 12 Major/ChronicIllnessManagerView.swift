@@ -76,7 +76,7 @@ struct MainMenu: View {
                 Text("06pm                                                                 ")
                 Spacer()
                 Text("12pm                                                                 ")
-            }.padding(.vertical)
+            }.padding()
         }.padding(.horizontal)
     }
     
@@ -88,9 +88,9 @@ struct MainMenu: View {
             Spacer()
             navButton(icon: "calendar") {Calendar()}
             Spacer()
-            navButton(icon: "plus.app") {AddLog()}
+            navButton(icon: "plus.app") {AddLog(manager)}
             Spacer()
-            navButton(icon: "list.bullet") {LogHistory()}
+            navButton(icon: "list.bullet") {SymptomLogger(manager)}
             Spacer()
             navButton(icon: "pill") {MedicationTimetable(manager)}
             Spacer()
@@ -102,6 +102,14 @@ struct MainMenu: View {
     
 }
 
+//Function to keep text length in limits
+func limitText(upper: Int, str: String) -> String {
+    var str = str
+    if str.count > upper {
+        str = String(str.prefix(upper))
+    }
+    return str
+}
 
 #Preview {
     // make in place since just preview. Would never do otherwise

@@ -10,11 +10,102 @@ import UserNotifications
 
 struct ManagerModel {
     var medTimetable: MedicationTimetable  // declare variable type before initialisation
+    var logHistory: LogHistory
     
     // initialise model
-    init(json: Data?) {
-        medTimetable = MedicationTimetable(json: json)
+    init(medJson: Data?, logJson: Data?) {
+        medTimetable = MedicationTimetable(json: medJson)
+        logHistory = LogHistory(json: logJson)
     }
+    
+    
+    // MARK: -- SYMPTOM LOGGER --
+    
+    mutating func createLog(title: String, date: Date, fieldVals: [Double], notes: String) {
+        var symptomFields: [SymptomField] = []
+        let id = logHistory.nextLogId
+        logHistory.nextLogId += 1  // increment ID tracker
+        // append fields
+        for i in logHistory.fieldNames.indices {
+            symptomFields.append(SymptomField(name: logHistory.fieldNames[i], value: fieldVals[i]))
+        }
+        
+        // default title
+        var newTitle = "Untitled"
+        if (title != "") {
+            newTitle = title
+        }
+        
+        // create log
+        let log = Log(id: id, date: date, title: newTitle, symptomFields: symptomFields, notes: notes)
+        // reverse to add to beginning then revert back
+        logHistory.logs.reverse()
+        logHistory.logs.append(log)  // add log to history
+        logHistory.logs.reverse()
+    }
+    
+    mutating func updateLog(id: Int, title: String, date: Date, symptomFields: [ManagerModel.SymptomField], notes: String) {
+        // find log then update it with new input data
+        for log in logHistory.logs.indices {
+            // if id matches, update record dircetly (variable can not be used)
+            if logHistory.logs[log].id == id {
+                logHistory.logs[log].title = title
+                logHistory.logs[log].date = date
+                logHistory.logs[log].symptomFields = symptomFields
+                logHistory.logs[log].notes = notes
+                break  // log has been updated
+            }
+        }
+    }
+    
+    mutating func delLog(_ id: Int) {
+        // loops through logs until correct id is found
+        for log in logHistory.logs.indices {
+            if logHistory.logs[log].id == id {
+                logHistory.logs.remove(at: log)
+                break
+            }
+        }
+    }
+    
+    
+    struct LogHistory: Codable {
+        var logs: [Log]
+        var fieldNames: [String]
+        var nextLogId: Int
+        
+        // load in log history from passed JSON otherwise default empty
+        init(json: Data?) {
+            // load default timetable (will be modified if load is successfull, otherwise default remains)
+            logs = []
+            fieldNames = ["Pain", "Fatigue"]
+            nextLogId = 0
+            
+            // attemtp to load timetable
+            if json != nil {
+                // force unwrap json (json!), checks can't be nil
+                do {
+                    self = try JSONDecoder().decode(LogHistory.self, from: json!)
+                } catch {
+                    print("Could not load from JSON. Default log history created")
+                }
+            }
+        }
+    }
+    
+    struct SymptomField: Codable {
+        var name: String
+        var value: Double
+    }
+    
+    struct Log: Codable {
+        var id: Int
+        var date: Date
+        var title: String
+        var symptomFields: [SymptomField]
+        var notes: String
+    }
+    
     
     
     // MARK: -- MED TIMETABLE --
@@ -34,8 +125,14 @@ struct ManagerModel {
         
         var timetable = medTimetable.days  // prevents access conflicts
         
+        // default name if empty
+        var newName = "Untitled"
+        if (name != "") {
+            newName = name
+        }
+        
         // add alert
-        let alert = MedicationAlert(id: id, name: name, day: day, time: time, backupTime: backupTime, notes: notes)
+        let alert = MedicationAlert(id: id, name: newName, day: day, time: time, backupTime: backupTime, notes: notes)
         timetable[day - 1].append(alert)
         // sort based on time
         timetable[day - 1].sort {a1, a2 in sortAlerts(a1, a2)}
@@ -169,7 +266,6 @@ struct ManagerModel {
     }
 
     
-    
     struct MedicationTimetable: Codable {
         // declare variable types before init
         var days: [[MedicationAlert]] // list of lists of med Alerts [day, [medAlert, ...], ...]
@@ -204,9 +300,5 @@ struct ManagerModel {
         var backupTime: Date
         var notes: String
     }
-    
-    
-    
-    
     
 }

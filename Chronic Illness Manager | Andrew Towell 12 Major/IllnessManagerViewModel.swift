@@ -10,15 +10,19 @@ import SwiftUI
 // VIEW MODEL
 class IllnessManagerViewModel: ObservableObject {
     // Model which publishes changes via ViewModel to View
-    @Published private var manager = ManagerModel(json: nil)  // create default manager
-    
+    @Published private var manager = ManagerModel(medJson: nil, logJson: nil)  // create default manager
+    // Links to access local persistent data
     private let medTimetableURL: URL = URL.documentsDirectory.appendingPathComponent("medTimetable.JSON")
+    private let logHistoryURL: URL = URL.documentsDirectory.appendingPathComponent("logHistory.JSON")
     
     init() {
         // load manager data from memory if able otherwise stick with default (Could be no data or error with data)
-        if let data = try? Data(contentsOf: medTimetableURL){
-            manager = ManagerModel(json: data)
-        }
+        let logHistoryData = try? Data(contentsOf: logHistoryURL)
+        let medTimetableData = try? Data(contentsOf: medTimetableURL)
+        
+        // pass JSON to manager
+        manager = ManagerModel(medJson: medTimetableData, logJson: logHistoryData)
+        
         // check for notification permissions on init then cue notifications for the day
         manager.checkNotifPerms()
     }
@@ -33,6 +37,30 @@ class IllnessManagerViewModel: ObservableObject {
         } catch {
             print("Error while saving")
         }
+    }
+    
+    
+    
+    // MARK: -- SYMPTOM LOGGER --
+    
+    // computed var
+    var logHistory: ManagerModel.LogHistory {
+        manager.logHistory
+    }
+    
+    func createLog(title: String, date: Date, sliderVals: [Double], notes: String) {
+        manager.createLog(title: title, date: date, fieldVals: sliderVals, notes: notes)
+        save(manager.logHistory, to: logHistoryURL)  // save to file
+    }
+    
+    func updateLog(id: Int, title: String, date: Date, symptomFields: [ManagerModel.SymptomField], notes: String) {
+        manager.updateLog(id: id, title: title, date: date, symptomFields: symptomFields, notes: notes)
+        save(manager.logHistory, to: logHistoryURL)  // save to file
+    }
+    
+    func delLog(_ id: Int) {
+        manager.delLog(id)
+        save(manager.logHistory, to: logHistoryURL)  // save to file
     }
     
     
