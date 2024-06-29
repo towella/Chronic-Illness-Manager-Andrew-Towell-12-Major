@@ -63,6 +63,22 @@ class IllnessManagerViewModel: ObservableObject {
         save(manager.logHistory, to: logHistoryURL)  // save to file
     }
     
+    func addSymptomField(_ name: String) {
+        manager.addSymptomField(name)
+        save(manager.logHistory, to: logHistoryURL) // save to file
+    }
+    
+    func updateFields(_ fieldNames: [String]) {
+        manager.updateFields(fieldNames)
+        save(manager.logHistory, to: logHistoryURL) // save to file
+    }
+    
+    func exportLogs(startRange: Date, endRange: Date) {
+        manager.exportLogs(startRange: startRange, endRange: endRange)
+        
+    }
+    
+    
     
     // MARK: -- MEDICATION TIMETABLE --
     

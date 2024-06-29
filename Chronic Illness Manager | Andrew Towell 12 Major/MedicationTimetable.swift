@@ -189,65 +189,66 @@ struct AddAlert: View {
             
             // screen body
             ScrollView {
-                // Title
-                HStack {
-                    Text("New Alert")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .padding(.top)
-                    Spacer()
-                }
-                
-                // widgets
-                widgetBox {
-                    HStack {Text("Medication Name")
-                        TextField("Alert title...", text: $name)
-                            .focused($focusedField, equals: .name)
-                            .onChange(of: name) {
-                                name = limitText(upper: 20, str: name)
-                            }
-                    }}
-                widgetBox {
-                    HStack {Text("Day:  \(day)")
-                        Spacer()
-                    }}
-                widgetBox {
-                    HStack {Text("Time")
-                        DatePicker("", selection: $time,
-                                   displayedComponents: .hourAndMinute)
-                    }}
-                widgetBox {
+                VStack {
+                    // Title
                     HStack {
-                        Text("Backup Time")
-                        DatePicker("", selection: $backupTime, displayedComponents: .hourAndMinute)
-                    }}
-                widgetBox {
-                    VStack {
-                        HStack {
-                            Text("Notes")
-                            Spacer()
-                        }
-                        TextField("Notes...", text: $notes, axis: .vertical)
-                            .focused($focusedField, equals: .notes)
-                            .lineLimit(8, reservesSpace: true)
-                            .onChange(of: notes) {
-                                notes = limitText(upper: 20, str: notes)
-                            }
+                        Text("New Alert")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .padding(.top)
+                        Spacer()
                     }
+                    
+                    // widgets
+                    widgetBox {
+                        HStack {Text("Medication Name")
+                            TextField("Alert title...", text: $name)
+                                .focused($focusedField, equals: .name)
+                                .onChange(of: name) {
+                                    name = limitText(upper: 20, str: name)
+                                }
+                        }}
+                    widgetBox {
+                        HStack {Text("Day:  \(day)")
+                            Spacer()
+                        }}
+                    widgetBox {
+                        HStack {Text("Time")
+                            DatePicker("", selection: $time,
+                                       displayedComponents: .hourAndMinute)
+                        }}
+                    widgetBox {
+                        HStack {
+                            Text("Backup Time")
+                            DatePicker("", selection: $backupTime, displayedComponents: .hourAndMinute)
+                        }}
+                    widgetBox {
+                        VStack {
+                            HStack {
+                                Text("Notes")
+                                Spacer()
+                            }
+                            TextField("Notes...", text: $notes, axis: .vertical)
+                                .focused($focusedField, equals: .notes)
+                                .lineLimit(8, reservesSpace: true)
+                                .onChange(of: notes) {
+                                    notes = limitText(upper: 20, str: notes)
+                                }
+                        }
+                    }
+                    
+                    // form buttons
+                    HStack {
+                        Button(action: {dismiss()}, label: {Text("Cancel")})
+                        Spacer()
+                        widgetBox {Button(action: {createAlert()}, label: {Text("Create")})}
+                            .frame(width: 130, height: 30)
+                    }
+                    .padding(.vertical)
+                    .foregroundStyle(Constants.Colours().buttonFill)
                 }
-                
-                // form buttons
-                HStack {
-                    Button(action: {dismiss()}, label: {Text("Cancel")})
-                    Spacer()
-                    widgetBox {Button(action: {createAlert()}, label: {Text("Create")})}
-                        .frame(width: 130, height: 30)
-                }
-                .padding(.vertical)
-                .foregroundStyle(Constants.Colours().buttonFill)
-                
+                .padding(.horizontal)
             }
-            .padding()
             .scrollContentBackground(.hidden)  // hide grey form background colour
             .textFieldStyle(.roundedBorder)
             .toolbar {
@@ -308,72 +309,73 @@ struct UpdateAlert: View {
             
             // screen body
             ScrollView {
-                // Title
-                HStack {
-                    Text("View/Edit Alert")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .padding(.top)
-                    Spacer()
-                    Button(action: {showDelAlert = true}, label: {Image(systemName: "trash")})
-                        .alert("Delete alert", isPresented: $showDelAlert) {
-                                    Button("Cancel", role: .cancel) {}
-                                    Button("Delete", role: .destructive) {delAlert(id)}
-                                }
-                        .foregroundColor(Constants.Colours().buttonFill)
-                        .imageScale(.large)
-                }
-                
-                // widgets
-                widgetBox {
-                    HStack {Text("Medication Name")
-                        TextField("Alert title...", text: $name)
-                            .focused($focusedField, equals: .name)
-                            .onChange(of: name) {
-                                name = limitText(upper: 20, str: name)
-                            }
-                    }}
-                widgetBox {
-                    HStack {Text("Day:  \(day)")
-                        Spacer()
-                    }}
-                widgetBox {
-                    HStack {Text("Time")
-                        DatePicker("", selection: $time,
-                                   displayedComponents: .hourAndMinute)
-                    }}
-                widgetBox {
+                VStack {
+                    // Title
                     HStack {
-                        Text("Backup Time")
-                        DatePicker("", selection: $backupTime, displayedComponents: .hourAndMinute)
-                    }}
-                widgetBox {
-                    VStack {
-                        HStack {
-                            Text("Notes")
-                            Spacer()
-                        }
-                        TextField("Notes...", text: $notes, axis: .vertical)
-                            .focused($focusedField, equals: .notes)
-                            .lineLimit(8, reservesSpace: true)
-                            .onChange(of: notes) {
-                                notes = limitText(upper: 400, str: notes)
+                        Text("View/Edit Alert")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .padding(.top)
+                        Spacer()
+                        Button(action: {showDelAlert = true}, label: {Image(systemName: "trash")})
+                            .alert("Delete alert", isPresented: $showDelAlert) {
+                                Button("Cancel", role: .cancel) {}
+                                Button("Delete", role: .destructive) {delAlert(id)}
                             }
+                            .foregroundColor(Constants.Colours().buttonFill)
+                            .imageScale(.large)
                     }
+                    
+                    // widgets
+                    widgetBox {
+                        HStack {Text("Medication Name")
+                            TextField("Alert title...", text: $name)
+                                .focused($focusedField, equals: .name)
+                                .onChange(of: name) {
+                                    name = limitText(upper: 20, str: name)
+                                }
+                        }}
+                    widgetBox {
+                        HStack {Text("Day:  \(day)")
+                            Spacer()
+                        }}
+                    widgetBox {
+                        HStack {Text("Time")
+                            DatePicker("", selection: $time,
+                                       displayedComponents: .hourAndMinute)
+                        }}
+                    widgetBox {
+                        HStack {
+                            Text("Backup Time")
+                            DatePicker("", selection: $backupTime, displayedComponents: .hourAndMinute)
+                        }}
+                    widgetBox {
+                        VStack {
+                            HStack {
+                                Text("Notes")
+                                Spacer()
+                            }
+                            TextField("Notes...", text: $notes, axis: .vertical)
+                                .focused($focusedField, equals: .notes)
+                                .lineLimit(8, reservesSpace: true)
+                                .onChange(of: notes) {
+                                    notes = limitText(upper: 400, str: notes)
+                                }
+                        }
+                    }
+                    
+                    // form buttons
+                    HStack {
+                        Button(action: {dismiss()}, label: {Text("Cancel")})
+                        Spacer()
+                        widgetBox {Button(action: {updateAlert()}, label: {Text("Save Changes")})}
+                            .frame(width: 150, height: 30)
+                    }
+                    .padding(.vertical)
+                    .foregroundStyle(Constants.Colours().buttonFill)
                 }
-                
-                // form buttons
-                HStack {
-                    Button(action: {dismiss()}, label: {Text("Cancel")})
-                    Spacer()
-                    widgetBox {Button(action: {updateAlert()}, label: {Text("Save Changes")})}
-                        .frame(width: 150, height: 30)
-                }
-                .padding(.vertical)
-                .foregroundStyle(Constants.Colours().buttonFill)
-                
+                .padding(.horizontal)
             }
-            .padding()
             .scrollContentBackground(.hidden)  // hide grey form background colour
             .textFieldStyle(.roundedBorder)
             .toolbar {

@@ -30,28 +30,30 @@ struct MainMenu: View {
     private var scrollBody: some View {
         // Scrollable section
         ScrollView {
-            HStack {
-                Text("Today's Plan!")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                Spacer()
-                navButton(icon: "gearshape") {Settings()}
+            VStack{
+                HStack {
+                    Text("Today's Plan!")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    Spacer()
+                    navButton(icon: "gearshape") {Settings()}
+                }
+                
+                dayPlanner
+                
+                // TODO: TEST ---------
+                widgetBox {
+                    HStack {Text("Notif test")
+                        DatePicker("", selection: $time,
+                                   displayedComponents: .hourAndMinute)
+                    }}
+                Button("Set time") {
+                    manager.setNotification(time: time, alertName: "Test")
+                    print("notif set")
+                }
+                // --------------------
             }
             .padding(.horizontal)
-            
-            dayPlanner
-            
-            // TODO: TEST ---------
-            widgetBox {
-                HStack {Text("Notif test")
-                    DatePicker("", selection: $time,
-                               displayedComponents: .hourAndMinute)
-                }}.padding(.horizontal, 5)
-            Button("Set time") {
-                manager.setNotification(time: time, alertName: "Test")
-                print("notif set")
-            }
-            // --------------------
         }
         .background(Constants.Colours().lightPurple)
     }
@@ -77,7 +79,7 @@ struct MainMenu: View {
                 Spacer()
                 Text("12pm                                                                 ")
             }.padding()
-        }.padding(.horizontal)
+        }
     }
     
     private var controlBar: some View {

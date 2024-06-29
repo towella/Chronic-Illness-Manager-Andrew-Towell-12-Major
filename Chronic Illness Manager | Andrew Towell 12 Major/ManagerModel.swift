@@ -7,6 +7,7 @@
 
 import Foundation
 import UserNotifications
+import PDFKit
 
 struct ManagerModel {
     var medTimetable: MedicationTimetable  // declare variable type before initialisation
@@ -67,6 +68,62 @@ struct ManagerModel {
             }
         }
     }
+    
+    mutating func addSymptomField(_ name: String) {
+        // default title if none provided
+        var newName = "Untitled"
+        if (name != "") {
+            newName = name
+        }
+        logHistory.fieldNames.append(newName)
+    }
+    
+    mutating func updateFields(_ fieldNames: [String]) {
+        logHistory.fieldNames = fieldNames
+    }
+    
+    func exportLogs(startRange: Date, endRange: Date) {
+        var inRange: [Log] = []
+        
+        // get all logs within time range
+        // will automatically be chronologically sorted (created in order and can not modify date)
+        // TODO: Currently can not export logs just on one day (both ends of range are equal)
+        for log in logHistory.logs {
+            if startRange <= log.date && log.date <= endRange {
+                inRange.append(log)
+            }
+        }
+    }
+    
+    func createPDF() -> Data {
+      // metadata
+      let pdfMetaData = [
+        kCGPDFContextCreator: "Chronic Illness Manager",
+        kCGPDFContextAuthor: "Andrew Towell"
+      ]
+      let format = UIGraphicsPDFRendererFormat()
+      format.documentInfo = pdfMetaData as [String: Any]
+
+      // page sizing (A4 at 72dpi)
+      let pageWidth = 8.3 * 72.0
+        let pageHeight = 11.7 * 72.0
+      let pageRect = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+
+      // init pdf renderer with size and metadata
+      let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
+      // create context which is used to draw on the pdf
+      let data = renderer.pdfData { (context) in
+        // begin pdf page (must be called before drawing. Can be called again to make multi page docs)
+        context.beginPage()
+        // draw string to context
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 72)]
+        let text = "Exported Logs"
+        text.draw(at: CGPoint(x: 0, y: 0), withAttributes: attributes)
+      }
+
+      return data
+    }
+    
     
     
     struct LogHistory: Codable {
