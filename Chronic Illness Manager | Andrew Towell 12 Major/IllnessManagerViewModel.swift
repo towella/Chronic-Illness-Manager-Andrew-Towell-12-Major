@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 // VIEW MODEL
 class IllnessManagerViewModel: ObservableObject {
@@ -73,9 +74,9 @@ class IllnessManagerViewModel: ObservableObject {
         save(manager.logHistory, to: logHistoryURL) // save to file
     }
     
-    func exportLogs(startRange: Date, endRange: Date) {
-        manager.exportLogs(startRange: startRange, endRange: endRange)
-        
+    func exportLogs(startRange: Date, endRange: Date) -> PDFDocument {
+        let pdfData: PDFDocument = manager.exportLogs(startRange: startRange, endRange: endRange)
+        return pdfData
     }
     
     

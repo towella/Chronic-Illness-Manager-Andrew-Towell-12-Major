@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 // MARK: ----- SCREENS -----
 
@@ -297,7 +298,7 @@ struct UpdateLog: View {
                     widgetBox {
                         HStack {Text("Date: ")
                             Spacer()
-                            Text(Date.now, format: .dateTime.day().month().year())
+                            Text(date, format: .dateTime.day().month().year())
                         }
                     }
                     
@@ -627,7 +628,9 @@ struct ExportLogs: View {
                     HStack {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
-                        widgetBox {Button(action: {exportLogs()}, label: {Text("Export")})}
+                        widgetBox {
+                            NavigationLink(destination: {DisplayExportPDF(data: exportLogs())},
+                                           label: {Text("Export")})}
                             .frame(width: 100, height: 30)
                     }
                     .padding(.vertical)
@@ -640,11 +643,40 @@ struct ExportLogs: View {
         .background(Constants.Colours().lightPurple)
     }
     
-    private func exportLogs() {
-        manager.exportLogs(startRange: startDate, endRange: endDate)
-        dismiss()
+    // provides pdf document to view to be displayed
+    private func exportLogs() -> PDFDocument {
+        let pdfData = manager.exportLogs(startRange: startDate, endRange: endDate)
+        return pdfData
     }
 }
+
+
+// MARK: -- Display Export PDF --
+// struct for displaying a pdf document
+struct PDFKitView: UIViewRepresentable {
+    let data: PDFDocument
+    
+    func makeUIView(context: Context) -> PDFView {
+        let pdfView = PDFView()
+        pdfView.document = self.data
+        pdfView.autoScales = true
+        return pdfView
+    }
+    
+    func updateUIView(_ pdfView: PDFView, context: Context) {
+        // Update the view if needed (If you change the pdf)
+    }
+}
+
+// view for displaying a pdf document (using PDFKitView)
+struct DisplayExportPDF: View {
+    let data: PDFDocument
+    
+    var body: some View {
+        PDFKitView(data: data)
+    }
+}
+
 
 #Preview {
     SymptomLogger(IllnessManagerViewModel())
