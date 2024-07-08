@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PDFKit
 
 // MARK: -- NAV BUTTON --
 // creates a navigation link with a given icon and destination view
@@ -45,6 +46,22 @@ struct widgetBox<Content: View>: View {
 }
 
 
-//#Preview {
-//    GeneralStructs()
-//}
+extension PDFDocument: Transferable {
+    // access title property easier than using metadata
+    // https://www.simanerush.com/posts/sharing-files
+    public var title: String? {
+    guard let attributes = self.documentAttributes,
+          let titleAttribute = attributes[PDFDocumentAttribute.titleAttribute]
+    else { return nil }
+
+    return titleAttribute as? String
+    }
+    
+    // make compatible with ShareLink
+    // https://stackoverflow.com/questions/77136993/swiftui-how-to-properly-use-sharelink-to-share-a-multipage-pdf-that-was-genera
+    public static var transferRepresentation: some TransferRepresentation {
+            DataRepresentation(exportedContentType: .pdf) { pdf in
+                return pdf.dataRepresentation() ?? Data()
+            }
+        }
+}

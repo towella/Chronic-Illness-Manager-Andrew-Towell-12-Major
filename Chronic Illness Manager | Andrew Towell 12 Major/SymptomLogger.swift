@@ -674,6 +674,11 @@ struct DisplayExportPDF: View {
     
     var body: some View {
         PDFKitView(data: data)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                ShareLink(item: data, preview: SharePreview(data.title!))
+            }
+        }
     }
 }
 

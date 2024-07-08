@@ -87,30 +87,38 @@ struct ManagerModel {
         
         // get all logs within time range
         // will automatically be chronologically sorted (created in order and can not modify date)
-        // TODO: Currently can not export logs just on one day (both ends of range are equal)
         for log in logHistory.logs {
-            if startRange <= log.date && log.date <= endRange {
+            let logDateStr = log.date.formatted(date: .abbreviated, time: .omitted)  // stringified date (omitts time)
+            // if date in range or stringified start == stringified date == stringified end (range encloses a single day)
+            // append log
+            if (startRange <= log.date && log.date <= endRange) || (startRange.formatted(date: .abbreviated, time: .omitted) == logDateStr && logDateStr == endRange.formatted(date: .abbreviated, time: .omitted)) {
                 inRange.append(log)
             }
         }
-
+        
+        let dateRangeStr = "(\(startRange.formatted(date: .abbreviated, time: .omitted)) - \(endRange.formatted(date: .abbreviated, time: .omitted)))"
+        
         let url = URL.downloadsDirectory
-        return createPDF(logs: inRange, path: url)
+        return createPDF(logs: inRange, path: url, dateRangeStr: dateRangeStr)
     }
     
-    func createPDF(logs: [Log], path: URL) -> PDFDocument {
+    func createPDF(logs: [Log], path: URL, dateRangeStr: String) -> PDFDocument {
         // -- init PDF --
         // metadata
+        let titleText = "Exported Logs \(dateRangeStr)"
         let pdfMetaData = [
         kCGPDFContextCreator: "Chronic Illness Manager",
-        kCGPDFContextAuthor: "Andrew Towell"
+        kCGPDFContextAuthor: "Andrew Towell",
+        kCGPDFContextTitle: titleText
         ]
         let format = UIGraphicsPDFRendererFormat()
         format.documentInfo = pdfMetaData as [String: Any]
+        
         // page sizing (A4 at 72dpi)
         let pageWidth = 8.3 * 72.0
         let pageHeight = 11.7 * 72.0
         let pageRect = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
+        
         // init pdf renderer with size and metadata
         let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
 
@@ -120,29 +128,94 @@ struct ManagerModel {
             // begin pdf page (must be called before drawing. Can be called again to make multi page docs)
             context.beginPage()
             
-            // draw string to context
-            let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
-            let text = "Exported Logs"
-            let textRect = CGRect(x: 100, // left margin
-                                  y: 100, // top margin
-                                  width: 200,
-                                  height: 20)
-            text.draw(in: textRect, withAttributes: attributes)
+            // page variables
+            let leftMargin = 50
+            let bottomMargin = 80
+            var topMargin = 80
+            let width = 500
+            let lineHeight = 20
+            let spacer = 20
+            
+            // text attributes
+            let mainTitleAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15)]
+            let headerAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
+            let normTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
+            
+            // render title of document
+            let textRect = CGRect(x: leftMargin, y: topMargin, width: width, height: lineHeight)
+            titleText.draw(in: textRect, withAttributes: mainTitleAttributes)
+            topMargin += spacer
+            checkNewPage()
+            
+            // render logs to pdf
+            for log in logs {
+                topMargin += spacer  // create space from the last element
+                checkNewPage()
+                
+                renderToPDF(text: log.title, attr: headerAttributes)
+                
+                // define all the pieces of text to be rendered for a log
+                var textToRender: [String] = []
+                textToRender.append("Date: \(log.date.formatted(date: .abbreviated, time: .omitted))")
+                for symp in log.symptomFields {
+                    textToRender.append("\(symp.name): \(Int(symp.value))")
+                }
+                textToRender.append("Additional Information:")
+                // wrap lines for additional info
+                var str = ""
+                var i = 0
+                for char in log.notes {
+                    // wrap notes at 80 char line
+                    if i % 80 == 0 && i > 0 {
+                        textToRender.append(str)
+                        str = String(char)  // begin new line
+                    // new line if user has entered a newline
+                    } else if char == "\n" {
+                        textToRender.append(str)
+                        str = ""
+                    // otherwise continue to build line
+                    } else {
+                        str += String(char)
+                    }
+                    i += 1
+                }
+                // add on remainder of line (otherwise would be cut off)
+                if str != "" {
+                    textToRender.append(str)
+                }
+                
+                // render data
+                for text in textToRender {
+                    renderToPDF(text: text, attr: normTextAttributes)
+                }
+                
+            }
+            
+            // define drawable area and text to be written, then render text to pdf
+            func renderToPDF(text: String, attr: [NSAttributedString.Key : UIFont]) {
+                let textRect = CGRect(x: leftMargin, y: topMargin, width: width, height: lineHeight)
+                text.draw(in: textRect, withAttributes: attr)
+                topMargin += lineHeight // move margin down for next line
+                checkNewPage()
+            }
+            
+            // used to check if pdf needs a new page
+            func checkNewPage() {
+                // all must be type double as pageHeight is double
+                if Double(topMargin) + Double(spacer) > pageHeight - Double(bottomMargin) {
+                    context.beginPage()
+                    topMargin = bottomMargin  // reset margin to default (top and bottom margins are the same)
+                }
+            }
+            
         }
             
-        // write to file
-//        let outputURL = path
-//        .appendingPathComponent("exported_logs")
-//        .appendingPathExtension("pdf")
-//        try? data.write(to: outputURL)
-//        print("open \(outputURL.path)")
         
-//        let vc = UIActivityViewController(
-//          activityItems: [data],
-//          applicationActivities: []
-//        )
-
-        return PDFDocument(data: data)!
+        // -- return Pdf --
+        // store pdf in correct format, assign a title to metadata and return
+        let pdf = PDFDocument(data: data)!
+        pdf.documentAttributes![PDFDocumentAttribute.titleAttribute] = titleText
+        return pdf  // return pdf data using PDFDocument data type/struct
     }
     
     
