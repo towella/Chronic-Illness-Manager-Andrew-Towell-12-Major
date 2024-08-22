@@ -37,6 +37,7 @@ struct MainMenu: View {
                         .fontWeight(.bold)
                     Spacer()
                     navButton(icon: "gearshape") {Settings()}
+                    helpButton(manager: manager, screen: "main_menu")
                 }
                 
                 dayPlanner

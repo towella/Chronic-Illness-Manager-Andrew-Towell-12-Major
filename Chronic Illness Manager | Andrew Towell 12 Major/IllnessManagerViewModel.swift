@@ -40,6 +40,10 @@ class IllnessManagerViewModel: ObservableObject {
         }
     }
     
+    func getHelp(_ screen: String) -> String {
+        return manager.getHelp(screen: screen)
+    }
+    
     
     
     // MARK: -- SYMPTOM LOGGER --

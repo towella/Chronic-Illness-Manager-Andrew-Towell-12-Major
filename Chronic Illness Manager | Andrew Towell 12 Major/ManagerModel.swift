@@ -19,6 +19,109 @@ struct ManagerModel {
         logHistory = LogHistory(json: logJson)
     }
     
+    // MARK: -- GENERAL --
+    func getHelp(screen: String) -> String {
+        // main menu help
+        if screen == "main_menu" {
+            return """
+--- Help ---
+Settings: Cog icon
+Medical Records: Folder icon (under dev)
+Calendar: Calendar icon (under dev)
+New Log: Plus icon
+Log History: List icon
+Med Timetable: Pill icon
+
+Notif test is for debugging purposes
+"""
+        
+        // med timetable help
+        } else if screen == "med_timetable" {
+            return """
+--- Help ---
+Cycle Start Date: Date which medication cycle is in reference to
+Delete day: X icon
+New Med Alert: Plus icon (places on given day)
+New Day: "+ Add Day" button
+"""
+        } else if screen == "add_alert" {
+            return """
+--- Help ---
+Time: Primary notification time
+Backup Time: Secondary notification time
+Confirm Alert: "Create" button
+Cancel/Back: "Cancel" and "Back" buttons
+
+Day can not be changed
+"""
+        } else if screen == "update_alert" {
+            return """
+--- Help ---
+Delete Alert: Trash can icon
+Time: Primary notification time
+Backup Time: Secondary notification time
+Confirm Changes: "Save Changes" button
+Cancel/Back: "Cancel" and "Back" buttons
+"""
+        
+        // symptom logger help
+        } else if screen == "symptom_logger" {
+            return """
+--- Help ---
+Add Log: Plus icon
+Open/Update Log: Click log widget
+Export Log(s): Box and arrow icon
+"""
+        } else if screen == "add_log" {
+            return """
+--- Help ---
+Edit Symptoms: Elipses icon
+Add Symptom: Plus icon
+Confirm Log: "Create" button
+Cancel/Back: "Cancel" and "Back" buttons
+
+Logs may only be created under current date
+"""
+        } else if screen == "update_log" {
+            return """
+--- Help ---
+Delete Log: Trash can icon
+Confirm Changes: "Save Changes" button
+Cancel/Back: "Cancel" and "Back" buttons
+
+Date can not be changed.
+Symptoms can not be changed or removed.
+"""
+        } else if screen == "add_symptom_field" {
+            return """
+--- Help ---
+Confirm Field: "Add" button
+Cancel/Back: "Cancel" and "Back" buttons
+"""
+        } else if screen == "update_symptom_fields" {
+            return """
+--- Help ---
+Delete Field: X icon
+Confirm Changes: "Save Changes" button
+Cancel/Back: "Cancel" and "Back" buttons
+"""
+        } else if screen == "export_logs" {
+            return """
+--- Help ---
+Range start date: beginning of selection of logs
+Range end date: end of selection of logs
+Export: "Export" button
+Cancel/Back: "Cancel" and "Back" buttons
+
+Save PDF of logs to device storage or share with others
+"""
+            
+        // return error text
+        } else {
+            return "No help available for this screen."
+        }
+    }
+    
     
     // MARK: -- SYMPTOM LOGGER --
     

@@ -116,6 +116,11 @@ struct MedicationTimetable: View {
             }
         }
             .navigationTitle("Med Timetable")  // title for screen
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "med_timetable")
+                }
+            }
             .background(Constants.Colours().lightPurple)
             .onAppear {
                 cycleStart = manager.cycleStart
@@ -232,7 +237,7 @@ struct AddAlert: View {
                                 .focused($focusedField, equals: .notes)
                                 .lineLimit(8, reservesSpace: true)
                                 .onChange(of: notes) {
-                                    notes = limitText(upper: 20, str: notes)
+                                    notes = limitText(upper: 400, str: notes)
                                 }
                         }
                     }
@@ -252,6 +257,7 @@ struct AddAlert: View {
             .scrollContentBackground(.hidden)  // hide grey form background colour
             .textFieldStyle(.roundedBorder)
             .toolbar {
+                // KEYBOARD ITEMS
                 // push to right
                 ToolbarItem(placement: .keyboard) {
                     Spacer()
@@ -260,6 +266,11 @@ struct AddAlert: View {
                 ToolbarItem(placement: .keyboard) {
                     Button {focusedField = nil}
                 label: {Image(systemName: "keyboard.chevron.compact.down")}
+                }
+                
+                // SCREEN HEADER ITEMS
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "add_alert")
                 }
             }
         }
@@ -379,6 +390,7 @@ struct UpdateAlert: View {
             .scrollContentBackground(.hidden)  // hide grey form background colour
             .textFieldStyle(.roundedBorder)
             .toolbar {
+                // KEYBOARD ITEMS
                 // push to right
                 ToolbarItem(placement: .keyboard) {
                     Spacer()
@@ -387,6 +399,11 @@ struct UpdateAlert: View {
                 ToolbarItem(placement: .keyboard) {
                     Button {focusedField = nil}
                 label: {Image(systemName: "keyboard.chevron.compact.down")}
+                }
+                
+                // SCREEN HEADER ITEMS
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "update_alert")
                 }
             }
         }

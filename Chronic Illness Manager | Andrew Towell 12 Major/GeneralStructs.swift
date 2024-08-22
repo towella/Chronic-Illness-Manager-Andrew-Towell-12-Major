@@ -46,6 +46,18 @@ struct widgetBox<Content: View>: View {
 }
 
 
+// MARK: -- HELP BUTTON --
+struct helpButton: View {
+    @State var showHelp: Bool = false
+    let manager: IllnessManagerViewModel
+    let screen: String
+    var body: some View {
+        Button(action: {showHelp = true}, label: {Image(systemName: "questionmark.circle")})
+            .tint(.black)
+            .alert(manager.getHelp(screen), isPresented: $showHelp) {Button("Ok", role: .cancel) {}}
+    }
+}
+
 extension PDFDocument: Transferable {
     // access title property easier than using metadata
     // https://www.simanerush.com/posts/sharing-files

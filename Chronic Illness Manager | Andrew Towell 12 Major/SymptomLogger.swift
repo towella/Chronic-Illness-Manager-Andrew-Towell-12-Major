@@ -77,6 +77,11 @@ struct SymptomLogger: View {
                 }
                 .padding(.horizontal)
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "symptom_logger")
+                }
+            }
             
             Spacer() // take up all space
         }
@@ -212,6 +217,7 @@ struct AddLog: View {
             .scrollContentBackground(.hidden)  // hide grey form background colour
             .textFieldStyle(.roundedBorder)
             .toolbar {
+                // KEYBOARD ITEMS
                 // push to right
                 ToolbarItem(placement: .keyboard) {
                     Spacer()
@@ -220,6 +226,11 @@ struct AddLog: View {
                 ToolbarItem(placement: .keyboard) {
                     Button {focusedField = nil}
                 label: {Image(systemName: "keyboard.chevron.compact.down")}
+                }
+                
+                // HEADER BAR ITEMS
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "add_log")
                 }
             }
         }
@@ -356,6 +367,7 @@ struct UpdateLog: View {
             }
             .textFieldStyle(.roundedBorder)
             .toolbar {
+                // KEYBOARD ITEMS
                 // push to right
                 ToolbarItem(placement: .keyboard) {
                     Spacer()
@@ -364,6 +376,11 @@ struct UpdateLog: View {
                 ToolbarItem(placement: .keyboard) {
                     Button {focusedField = nil}
                 label: {Image(systemName: "keyboard.chevron.compact.down")}
+                }
+                
+                // HEADER BAR ITEMS
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "update_log")
                 }
             }
         }
@@ -447,6 +464,7 @@ struct AddSymptomField: View {
             }
             .textFieldStyle(.roundedBorder)
             .toolbar {
+                // KEYBOARD ITEMS
                 // push to right
                 ToolbarItem(placement: .keyboard) {
                     Spacer()
@@ -455,6 +473,11 @@ struct AddSymptomField: View {
                 ToolbarItem(placement: .keyboard) {
                     Button {focusedField = nil}
                 label: {Image(systemName: "keyboard.chevron.compact.down")}
+                }
+                
+                // HEADER BAR ITEMS
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "add_symptom_field")
                 }
             }
         }
@@ -541,6 +564,7 @@ struct UpdateSymptomFields: View {
             }
             .textFieldStyle(.roundedBorder)
             .toolbar {
+                // KEYBOARD ITEMS
                 // push to right
                 ToolbarItem(placement: .keyboard) {
                     Spacer()
@@ -549,6 +573,11 @@ struct UpdateSymptomFields: View {
                 ToolbarItem(placement: .keyboard) {
                     Button {focusedField = nil}
                 label: {Image(systemName: "keyboard.chevron.compact.down")}
+                }
+                
+                // HEADER BAR ITEMS
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "update_symptom_fields")
                 }
             }
         }
@@ -629,7 +658,7 @@ struct ExportLogs: View {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
                         widgetBox {
-                            NavigationLink(destination: {DisplayExportPDF(data: exportLogs())},
+                            NavigationLink(destination: {DisplayExportPDF(manager: manager, data: exportLogs())},
                                            label: {Text("Export")})}
                             .frame(width: 100, height: 30)
                     }
@@ -637,6 +666,11 @@ struct ExportLogs: View {
                     .foregroundStyle(Constants.Colours().buttonFill)
                 }
                 .padding(.horizontal)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    helpButton(manager: manager, screen: "export_logs")
+                }
             }
         }
         .navigationTitle("Export Logs")  // title for screen
@@ -670,6 +704,7 @@ struct PDFKitView: UIViewRepresentable {
 
 // view for displaying a pdf document (using PDFKitView)
 struct DisplayExportPDF: View {
+    let manager: IllnessManagerViewModel
     let data: PDFDocument
     
     var body: some View {
