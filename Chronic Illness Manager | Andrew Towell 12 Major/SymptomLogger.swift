@@ -593,7 +593,6 @@ struct UpdateSymptomFields: View {
     
     // remove field name from temporary state variable
     private func delField() {
-        print(fieldToDel)
         fieldNames.remove(at: fieldToDel)
         fieldToDel = 0  // must be reset otherwise will error when final field deleted
     }

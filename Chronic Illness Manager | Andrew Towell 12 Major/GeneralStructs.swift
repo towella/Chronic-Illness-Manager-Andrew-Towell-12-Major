@@ -27,6 +27,7 @@ struct navButton<Destination: View>: View {
 
 // MARK: -- WIDGET BOX --
 struct widgetBox<Content: View>: View {
+    var borderColor = Constants.Colours().lightOutline  // var instead of let makes setting property optional when instantiating (defaults to set value if not passed)
     @ViewBuilder let content: Content
     var body: some View {
         ZStack {
@@ -35,7 +36,7 @@ struct widgetBox<Content: View>: View {
             
             RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
                 .strokeBorder(lineWidth: Constants.Widget().lineWidth)
-                .foregroundColor(Constants.Colours().lightOutline)
+                .foregroundColor(borderColor)
                 .shadow(radius: Constants.Widget().shadowRadius)
             
             // Box Content
@@ -58,6 +59,24 @@ struct helpButton: View {
     }
 }
 
+
+// MARK: -- CHECKBOX --
+// https://www.kodeco.com/books/swiftui-cookbook/v1.0/chapters/2-create-a-checkbox-in-swiftui
+struct CheckboxToggleStyle: ToggleStyle {
+  func makeBody(configuration: Self.Configuration) -> some View {
+    HStack {
+      configuration.label
+      Spacer()
+      Image(systemName: configuration.isOn ? "checkmark.square" : "square")
+        .resizable()
+        .frame(width: 24, height: 24)
+        .onTapGesture { configuration.isOn.toggle() }
+    }
+  }
+}
+
+
+// MARK: -- PDF --
 extension PDFDocument: Transferable {
     // access title property easier than using metadata
     // https://www.simanerush.com/posts/sharing-files

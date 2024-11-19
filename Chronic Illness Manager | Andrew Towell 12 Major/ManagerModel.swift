@@ -8,15 +8,18 @@
 import Foundation
 import UserNotifications
 import PDFKit
+import SwiftUI
 
 struct ManagerModel {
+    var settings:     UserSettings
     var medTimetable: MedicationTimetable  // declare variable type before initialisation
-    var logHistory: LogHistory
+    var logHistory:   LogHistory
     
     // initialise model
-    init(medJson: Data?, logJson: Data?) {
+    init(settingsJson: Data?, medJson: Data?, logJson: Data?) {
+        settings     = UserSettings(json: settingsJson)
         medTimetable = MedicationTimetable(json: medJson)
-        logHistory = LogHistory(json: logJson)
+        logHistory   = LogHistory(json: logJson)
     }
     
     // MARK: -- GENERAL --
@@ -32,7 +35,7 @@ New Log: Plus icon
 Log History: List icon
 Med Timetable: Pill icon
 
-Notif test is for debugging purposes
+Notif eg for showcase purposes
 """
         
         // med timetable help
@@ -120,6 +123,63 @@ Save PDF of logs to device storage or share with others
         } else {
             return "No help available for this screen."
         }
+    }
+    
+    
+    // MARK: -- SETTINGS --
+    
+    mutating func resetSettings() {
+        settings.theme         = UserSettings.Defaults().theme
+        settings.notifications = UserSettings.Defaults().notifications
+        settings.textColor     = UserSettings.Defaults().textColor
+        settings.whiteIcons    = UserSettings.Defaults().whiteIcons
+    }
+    
+    
+    mutating func updateSettings(theme: [Double], notifications: Bool, textColor: [Double], whiteIcons: Bool) {
+        settings.theme         = theme
+        settings.notifications = notifications
+        settings.textColor     = textColor
+        settings.whiteIcons    = whiteIcons
+        print(theme)
+        print(notifications)
+        print(textColor)
+        print(whiteIcons)
+    }
+    
+    // colours stored in format provided to SwiftUI Colour() (red/255, green/255, blue/255)
+    struct UserSettings: Codable {
+        struct Defaults {
+            let theme: [Double] = [231/255, 205/255, 253/255]
+            let notifications = true
+            let textColor: [Double] = [0, 0, 0]
+            let whiteIcons = false
+        }
+        
+        var theme: [Double]  // represents rgb of colour
+        var notifications: Bool
+        var textColor: [Double]  // represents rgb of colour
+        var whiteIcons: Bool
+        
+        // init with json data
+        init(json: Data?) {
+            // load default settings (will be modified if successful)
+            theme         = Defaults().theme
+            notifications = Defaults().notifications
+            textColor     = Defaults().textColor
+            whiteIcons    = Defaults().whiteIcons
+            
+            // attempt to load user settings
+            if json != nil {
+                // force unwrap json (json!), checks can't be nil
+                do {
+                    self = try JSONDecoder().decode(UserSettings.self, from: json!)
+                } catch {
+                    print("Could not load from JSON. Default settings used")
+                }
+            }
+        }
+
     }
     
     

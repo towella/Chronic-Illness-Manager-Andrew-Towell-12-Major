@@ -37,6 +37,7 @@ struct MedicationTimetable: View {
 
             // Scroll section (screen body)
             ScrollView {
+                Text("Note: notifications do not function (no access to a server to schedule and send)").font(.custom("Small", size: 10))
                 widgetBox {
                     HStack {Text("Cycle Start Date")
                         // can only pick dates before or including today

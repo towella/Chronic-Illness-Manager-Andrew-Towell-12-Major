@@ -36,7 +36,19 @@ struct MainMenu: View {
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     Spacer()
-                    navButton(icon: "gearshape") {Settings()}
+                    // settings values must be passed into the Settings view as they can not be
+                    // initialised to specific values within an init function without being overwritten by
+                    // default values in the main constructor >:(
+                    navButton(icon: "gearshape")
+                        {Settings(manager: manager,
+                                  themeColor: Color(red:   manager.settings.theme[0],
+                                                    green: manager.settings.theme[1],
+                                                    blue:  manager.settings.theme[2]),
+                                  useNotifs: manager.settings.notifications,
+                                  textColor: Color(red:    manager.settings.textColor[0],
+                                                   green:  manager.settings.textColor[1],
+                                                   blue:   manager.settings.textColor[2]),
+                                  useWhiteIcons: manager.settings.whiteIcons)}
                     helpButton(manager: manager, screen: "main_menu")
                 }
                 
@@ -44,7 +56,7 @@ struct MainMenu: View {
                 
                 // TODO: TEST ---------
                 widgetBox {
-                    HStack {Text("Notif test")
+                    HStack {Text("Notification example")
                         DatePicker("", selection: $time,
                                    displayedComponents: .hourAndMinute)
                     }}
