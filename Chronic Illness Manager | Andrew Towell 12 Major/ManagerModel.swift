@@ -11,12 +11,14 @@ import PDFKit
 import SwiftUI
 
 struct ManagerModel {
+    var constants:   Constants
     var settings:     UserSettings
     var medTimetable: MedicationTimetable  // declare variable type before initialisation
     var logHistory:   LogHistory
     
     // initialise model
-    init(settingsJson: Data?, medJson: Data?, logJson: Data?) {
+    init(constantsJson: Data?, settingsJson: Data?, medJson: Data?, logJson: Data?) {
+        constants    = Constants(json: constantsJson)
         settings     = UserSettings(json: settingsJson)
         medTimetable = MedicationTimetable(json: medJson)
         logHistory   = LogHistory(json: logJson)
@@ -126,17 +128,76 @@ Save PDF of logs to device storage or share with others
     }
     
     
+    // MARK: -- CONSTANTS --
+    struct Constants: Codable {
+        var general = General()
+        var colours = Colours()
+        var widget = Widget()
+        
+        init(json: Data?) {
+            // attempt to load constants
+            if json != nil {
+                // force unwrap json (json!), checks can't be nil
+                do {
+                    self = try JSONDecoder().decode(Constants.self, from: json!)
+                } catch {
+                    print("Could not load from JSON. Default constants used")
+                }
+            }
+        }
+        
+        // MARK: General
+        struct General: Codable {
+            var fontSize: CGFloat = 20
+        }
+        
+        // MARK: Colours
+        struct Colours: Codable {
+            var textColor: [Double] = [0, 0, 0]
+            
+            var mainColour: [Double] = [231/255, 205/255, 253/255]  // 0, 0, 0
+            var darkColour: [Double] = [164/255, 139/255, 211/255]  // -67, -66, -42
+            var lightColour: [Double] = [248/255, 237/255, 250/255] // +17, +32, -3
+            
+            var buttonFill: [Double] = [0, 0, 0]
+            var lightOutline: [Double] = [119/255, 119/255, 119/255]
+            
+            var colouredTabBG: [Double] = [176/255, 232/255, 178/255]  // -55, +27, -75
+            var colouredTabBorder: [Double] = [213/255, 213/255, 213/255]
+            
+            var danger: [Double] = [254/255, 60/255, 48/255]
+        }
+        
+        // MARK: Widget
+        struct Widget: Codable {
+            var cornerRadius: CGFloat = 12
+            var lineWidth: CGFloat = 2
+            var shadowRadius: CGFloat = 15
+            
+        }
+    }
+    
+    
     // MARK: -- SETTINGS --
     
+    // resets settings which tracks user settings and constants which should reflect settings
     mutating func resetSettings() {
+        // reset user settings
         settings.theme         = UserSettings.Defaults().theme
         settings.notifications = UserSettings.Defaults().notifications
         settings.textColor     = UserSettings.Defaults().textColor
         settings.whiteIcons    = UserSettings.Defaults().whiteIcons
+        
+        // Reset constants
+        constants.general = Constants.General()
+        constants.colours = Constants.Colours()
+        constants.widget  = Constants.Widget()
     }
     
     
+    // modifies settings which tracks user setting and constants which should reflect changes to settings
     mutating func updateSettings(theme: [Double], notifications: Bool, textColor: [Double], whiteIcons: Bool) {
+        // settings modifications
         settings.theme         = theme
         settings.notifications = notifications
         settings.textColor     = textColor
@@ -145,6 +206,26 @@ Save PDF of logs to device storage or share with others
         print(notifications)
         print(textColor)
         print(whiteIcons)
+        
+        // -- constants modifications --
+        // update icon colours (white or black)
+        constants.colours.buttonFill = [0, 0, 0]
+        if (whiteIcons) {
+            constants.colours.buttonFill = [1, 1, 1]
+        }
+        print("whiteIcons:")
+        print(whiteIcons)
+        
+        // update core colours
+        constants.colours.textColor  = textColor
+        constants.colours.mainColour = theme
+        // correct theme colours with appropriate relationship with main colour
+        // exceeding valid ratio range is handled automatically by swift
+        constants.colours.darkColour    = [theme[0] - 67/255, theme[1] - 66/255, theme[2] - 42/255]
+        constants.colours.lightColour   = [theme[0] + 17/255, theme[1] + 32/255, theme[2] - 3/255]
+        
+        // update other colours
+        constants.colours.colouredTabBG = [theme[0] - 55/255, theme[1] + 27/255, theme[2] - 75/255]
     }
     
     // colours stored in format provided to SwiftUI Colour() (red/255, green/255, blue/255)

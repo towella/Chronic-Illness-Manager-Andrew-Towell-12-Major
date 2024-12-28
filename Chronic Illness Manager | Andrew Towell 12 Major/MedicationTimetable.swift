@@ -25,6 +25,27 @@ struct MedicationTimetable: View {
         dayInCycle = m.getDayInCycle()
     }
     
+    private var cycleHeader: some View {
+        return VStack {
+            Text("Note: notifications do not function (no access to a server to schedule and send)").font(.custom("Small", size: 10))
+            widgetBox(manager: manager,
+                      borderColor: getColour(manager.constants.colours.lightOutline)) {
+                HStack {Text("Cycle Start Date")
+                    // can only pick dates before or including today
+                    DatePicker("", selection: $cycleStart,
+                               in: ...Date(),
+                               displayedComponents: .date)
+                    Button("Set") {
+                        updateCycle()
+                    }
+                    Spacer()
+                }
+            }
+                      .padding([.horizontal, .top], 5)
+        }
+    }
+    
+    
     var body: some View {
         VStack {
             // Fill Up Header Bar
@@ -32,26 +53,13 @@ struct MedicationTimetable: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
 
             // Scroll section (screen body)
             ScrollView {
-                Text("Note: notifications do not function (no access to a server to schedule and send)").font(.custom("Small", size: 10))
-                widgetBox {
-                    HStack {Text("Cycle Start Date")
-                        // can only pick dates before or including today
-                        DatePicker("", selection: $cycleStart,
-                                   in: ...Date(),
-                                   displayedComponents: .date)
-                        Button("Set") {
-                            updateCycle()
-                        }
-                        Spacer()
-                    }
-                }
-                .padding([.horizontal, .top], 5)
-
+                cycleHeader
+                
                 // create timetable UI
                 LazyVGrid(columns: [GridItem(spacing: 0), GridItem(spacing: 0)], spacing: 0) {
                     ForEach (manager.medTimetable.days.indices, id: \.self) {dayIndex in
@@ -59,7 +67,8 @@ struct MedicationTimetable: View {
                         let dayAlerts = manager.medTimetable.days[dayIndex]
                         
                         // Day box
-                        widgetBox { VStack {
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) { VStack {
                             // title and delete button
                             HStack {
                                 ZStack {
@@ -80,14 +89,14 @@ struct MedicationTimetable: View {
                                 }
                                 Spacer()
                                 // must record what day to delete as popup does not show immediately, allowing dayIndex to be changed to the wrong day before deletion occurs.
-                                Button(action: {dayToDel = dayIndex; showDelAlert = true}, 
+                                Button(action: {dayToDel = dayIndex; showDelAlert = true},
                                        label: {Image(systemName: "clear")})
                                     .alert("Delete day "+String(dayToDel + 1), isPresented: $showDelAlert) {
                                                 Button("Cancel", role: .cancel) {}
                                                 Button("Delete", role: .destructive) {
                                                     delDay(dayToDel)}
                                             }
-                                    .foregroundColor(Constants.Colours().buttonFill)
+                                    .foregroundColor(getColour(manager.constants.colours.buttonFill))
                             }
 
                             // med alerts list and add alert button
@@ -95,7 +104,7 @@ struct MedicationTimetable: View {
                                 // list of alerts
                                 alertList(dayAlerts)
                                 // add alert button
-                                navButton(icon: "plus.square.dashed") {AddAlert(manager: manager, day: day)}
+                                navButton(manager: manager, icon: "plus.square.dashed") {AddAlert(manager: manager, day: day)}
                                     .imageScale(.small)
                                     .padding(.top, 1)
                                 Spacer() // push everything up
@@ -105,11 +114,12 @@ struct MedicationTimetable: View {
                         .padding(5)
                     
                     // add day button
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         Button(
                             action: {addDay()},
                             label: {
-                                Text("+ Add Day").foregroundColor(Constants.Colours().buttonFill)
+                                Text("+ Add Day").foregroundColor(getColour(manager.constants.colours.buttonFill))
                     })}
                         .frame(width: 120, height: 50)
                         .padding()
@@ -122,7 +132,8 @@ struct MedicationTimetable: View {
                     helpButton(manager: manager, screen: "med_timetable")
                 }
             }
-            .background(Constants.Colours().lightPurple)
+            .background(getColour(manager.constants.colours.mainColour))
+            .foregroundColor(getColour(manager.constants.colours.textColor))
             .onAppear {
                 cycleStart = manager.cycleStart
                 dayInCycle = manager.getDayInCycle()
@@ -135,6 +146,7 @@ struct MedicationTimetable: View {
         ForEach(alerts.indices, id: \.self) { alert in
             let alertData = alerts[alert]
             AlertTab(
+                manager: manager,
                 content: {Text("\(alertData.name) - \(alertData.time.formatted(date: .omitted, time: .shortened))")},
                 destination: UpdateAlert(
                     manager: manager,
@@ -190,7 +202,7 @@ struct AddAlert: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             // screen body
@@ -206,7 +218,8 @@ struct AddAlert: View {
                     }
                     
                     // widgets
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Medication Name")
                             TextField("Alert title...", text: $name)
                                 .focused($focusedField, equals: .name)
@@ -214,21 +227,25 @@ struct AddAlert: View {
                                     name = limitText(upper: 20, str: name)
                                 }
                         }}
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Day:  \(day)")
                             Spacer()
                         }}
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Time")
                             DatePicker("", selection: $time,
                                        displayedComponents: .hourAndMinute)
                         }}
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {
                             Text("Backup Time")
                             DatePicker("", selection: $backupTime, displayedComponents: .hourAndMinute)
                         }}
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         VStack {
                             HStack {
                                 Text("Notes")
@@ -247,11 +264,12 @@ struct AddAlert: View {
                     HStack {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
-                        widgetBox {Button(action: {createAlert()}, label: {Text("Create")})}
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {Button(action: {createAlert()}, label: {Text("Create")})}
                             .frame(width: 130, height: 30)
                     }
                     .padding(.vertical)
-                    .foregroundStyle(Constants.Colours().buttonFill)
+                    .foregroundStyle(getColour(manager.constants.colours.buttonFill))
                 }
                 .padding(.horizontal)
             }
@@ -276,7 +294,8 @@ struct AddAlert: View {
             }
         }
         .navigationTitle("New Med Alert")  // title for screen
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.mainColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
     
     // MARK: create alert
@@ -316,7 +335,7 @@ struct UpdateAlert: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             // screen body
@@ -334,12 +353,13 @@ struct UpdateAlert: View {
                                 Button("Cancel", role: .cancel) {}
                                 Button("Delete", role: .destructive) {delAlert(id)}
                             }
-                            .foregroundColor(Constants.Colours().buttonFill)
+                            .foregroundColor(getColour(manager.constants.colours.buttonFill))
                             .imageScale(.large)
                     }
                     
                     // widgets
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Medication Name")
                             TextField("Alert title...", text: $name)
                                 .focused($focusedField, equals: .name)
@@ -347,21 +367,25 @@ struct UpdateAlert: View {
                                     name = limitText(upper: 20, str: name)
                                 }
                         }}
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Day:  \(day)")
                             Spacer()
                         }}
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Time")
                             DatePicker("", selection: $time,
                                        displayedComponents: .hourAndMinute)
                         }}
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {
                             Text("Backup Time")
                             DatePicker("", selection: $backupTime, displayedComponents: .hourAndMinute)
                         }}
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         VStack {
                             HStack {
                                 Text("Notes")
@@ -380,11 +404,12 @@ struct UpdateAlert: View {
                     HStack {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
-                        widgetBox {Button(action: {updateAlert()}, label: {Text("Save Changes")})}
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {Button(action: {updateAlert()}, label: {Text("Save Changes")})}
                             .frame(width: 150, height: 30)
                     }
                     .padding(.vertical)
-                    .foregroundStyle(Constants.Colours().buttonFill)
+                    .foregroundStyle(getColour(manager.constants.colours.buttonFill))
                 }
                 .padding(.horizontal)
             }
@@ -409,7 +434,8 @@ struct UpdateAlert: View {
             }
         }
         .navigationTitle("Medication Alert")  // title for screen
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.lightColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
         
     // MARK: update alert
@@ -436,23 +462,26 @@ struct UpdateAlert: View {
 
 // MARK: -- ALERT TAB --
 struct AlertTab<Content: View, Destination: View>: View {
+    let manager: IllnessManagerViewModel
     @ViewBuilder let content: Content
+    
     let destination: Destination
     var body: some View {
         NavigationLink(
             destination: destination,
             label: {
                 ZStack {
-                    RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
-                        .foregroundColor(Constants.Colours().colouredTab)
+                    RoundedRectangle(cornerRadius: manager.constants.widget.cornerRadius)
+                        .foregroundColor(getColour(manager.constants.colours.colouredTabBG))
                     
-                    RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
-                        .strokeBorder(lineWidth: Constants.Widget().lineWidth)
-                        .foregroundColor(Constants.Colours().colouredTabBorder)
-                        .shadow(radius: Constants.Widget().shadowRadius)
+                    RoundedRectangle(cornerRadius: manager.constants.widget.cornerRadius)
+                        .strokeBorder(lineWidth: manager.constants.widget.lineWidth)
+                        .foregroundColor(getColour(manager.constants.colours.colouredTabBorder))
+                        .shadow(radius: manager.constants.widget.shadowRadius)
                     
                     content
                         .padding(3)
+                        .foregroundColor(getColour(manager.constants.colours.textColor))
                 }
         })
     }

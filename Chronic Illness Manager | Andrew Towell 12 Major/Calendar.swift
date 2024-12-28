@@ -9,6 +9,13 @@ import SwiftUI
 
 // MARK: -- CALENDAR --
 struct Calendar: View {
+    // observed object (view model)
+    @ObservedObject var manager: IllnessManagerViewModel
+    
+    init(_ m: IllnessManagerViewModel) {
+        manager = m
+    }
+    
     var body: some View {
         VStack {
             
@@ -17,7 +24,7 @@ struct Calendar: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             // Scroll section
@@ -28,10 +35,11 @@ struct Calendar: View {
             Spacer() // take up all space
         }
             .navigationTitle("Calendar")  // title for screen
-            .background(Constants.Colours().lightPurple)
+            .background(getColour(manager.constants.colours.mainColour))
+            .foregroundColor(getColour(manager.constants.colours.textColor))
     }
 }
 
 #Preview {
-    Calendar()
+    Calendar(IllnessManagerViewModel())
 }

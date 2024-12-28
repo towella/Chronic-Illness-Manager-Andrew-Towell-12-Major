@@ -30,7 +30,7 @@ struct SymptomLogger: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             // Scroll section
@@ -41,9 +41,9 @@ struct SymptomLogger: View {
                             .font(.title3)
                             .fontWeight(.bold)
                         Spacer()
-                        navButton(icon: "square.and.arrow.up") {ExportLogs(manager)}
+                        navButton(manager: manager, icon: "square.and.arrow.up") {ExportLogs(manager)}
                     }
-                    navButton(icon: "plus.app") {AddLog(manager)}
+                    navButton(manager: manager, icon: "plus.app") {AddLog(manager)}
                     
                     // display each log as a clickable link to edit screen
                     ForEach(manager.logHistory.logs.indices, id: \.self) {log in
@@ -56,7 +56,8 @@ struct SymptomLogger: View {
                                                    symptomFields: logData.symptomFields,
                                                    notes: logData.notes),
                             label: {
-                                widgetBox {
+                                widgetBox(manager: manager,
+                                          borderColor: getColour(manager.constants.colours.lightOutline)) {
                                     VStack {
                                         HStack {
                                             Text("\(logData.title)")
@@ -86,7 +87,8 @@ struct SymptomLogger: View {
             Spacer() // take up all space
         }
             .navigationTitle("Log History")  // title for screen
-            .background(Constants.Colours().lightPurple)
+            .background(getColour(manager.constants.colours.mainColour))
+            .foregroundColor(getColour(manager.constants.colours.textColor))
     }
 }
 
@@ -118,7 +120,7 @@ struct AddLog: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             // screen body
@@ -134,7 +136,8 @@ struct AddLog: View {
                     }
                     
                     // widgets
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Title")
                             TextField("Log title...", text: $title)
                                 .focused($focusedField, equals: .title)
@@ -143,7 +146,8 @@ struct AddLog: View {
                                 }
                         }}
                     HStack {
-                        widgetBox {
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {
                             HStack {Text("Date: ")
                                 Spacer()
                                 Text(Date.now, format: .dateTime.day().month().year())
@@ -156,15 +160,16 @@ struct AddLog: View {
                         Text("Symptoms")
                             .bold()
                         Spacer()
-                        navButton(icon: "ellipsis") {UpdateSymptomFields(manager: manager,
-                                                                         fieldNames: manager.logHistory.fieldNames)}
+                        navButton(manager: manager, icon: "ellipsis") {UpdateSymptomFields(manager: manager,
+                                                fieldNames: manager.logHistory.fieldNames)}
                         .imageScale(.small)
                     }
                     .padding(.top)
                     
                     // produces symptom field sliders for each name
                     ForEach(manager.logHistory.fieldNames.indices, id: \.self) {name in
-                        widgetBox {
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {
                             HStack {
                                 Text(manager.logHistory.fieldNames[name])
                                 Slider(
@@ -176,13 +181,14 @@ struct AddLog: View {
                             }
                         }
                     }
-                    navButton(icon: "plus.square.dashed") {AddSymptomField(manager: manager)}
+                    navButton(manager: manager, icon: "plus.square.dashed") {AddSymptomField(manager: manager)}
                         .imageScale(.small)
                         .padding(.top, 1)
                     
                     Spacer()
                     
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         VStack {
                             HStack{
                                 Text("Additional Information")
@@ -206,11 +212,12 @@ struct AddLog: View {
                     HStack {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
-                        widgetBox {Button(action: {createLog()}, label: {Text("Create")})}
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {Button(action: {createLog()}, label: {Text("Create")})}
                             .frame(width: 100, height: 30)
                     }
                     .padding(.vertical)
-                    .foregroundStyle(Constants.Colours().buttonFill)
+                    .foregroundStyle(getColour(manager.constants.colours.buttonFill))
                 }
                 .padding(.horizontal)
             }
@@ -235,7 +242,8 @@ struct AddLog: View {
             }
         }
         .navigationTitle("New Log")  // title for screen
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.mainColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
     
     // MARK: create log
@@ -273,7 +281,7 @@ struct UpdateLog: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             // screen body
@@ -291,12 +299,13 @@ struct UpdateLog: View {
                                 Button("Cancel", role: .cancel) {}
                                 Button("Delete", role: .destructive) {delLog(id)}
                             }
-                            .foregroundColor(Constants.Colours().buttonFill)
+                            .foregroundColor(getColour(manager.constants.colours.buttonFill))
                             .imageScale(.large)
                     }
                     
                     // widgets
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Title")
                             TextField("Log title...", text: $title)
                                 .focused($focusedField, equals: .title)
@@ -306,7 +315,8 @@ struct UpdateLog: View {
                         }
                         
                     }
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {Text("Date: ")
                             Spacer()
                             Text(date, format: .dateTime.day().month().year())
@@ -322,7 +332,8 @@ struct UpdateLog: View {
                     // create slider fields based on log fields (not user's custom fields
                     // as they may have changed since log was made
                     ForEach(symptomFields.indices, id: \.self) {field in
-                        widgetBox {
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {
                             HStack {
                                 Text(symptomFields[field].name)
                                 Slider(
@@ -335,7 +346,8 @@ struct UpdateLog: View {
                         }
                     }
                     
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         VStack {
                             HStack {
                                 Text("Additional Information")
@@ -357,11 +369,12 @@ struct UpdateLog: View {
                     HStack {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
-                        widgetBox {Button(action: {updateLog()}, label: {Text("Save Changes")})}
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {Button(action: {updateLog()}, label: {Text("Save Changes")})}
                             .frame(width: 150, height: 30)
                     }
                     .padding(.vertical)
-                    .foregroundStyle(Constants.Colours().buttonFill)
+                    .foregroundStyle(getColour(manager.constants.colours.buttonFill))
                 }
                 .padding(.horizontal)
             }
@@ -385,7 +398,8 @@ struct UpdateLog: View {
             }
         }
         .navigationTitle("Medication Alert")  // title for screen
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.mainColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
     
     // MARK: update log
@@ -423,7 +437,7 @@ struct AddSymptomField: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             // screen body
@@ -440,7 +454,8 @@ struct AddSymptomField: View {
                     
                     // input
                     HStack {
-                        widgetBox {
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {
                             Text("Field name: ")
                             TextField("Field name...", text: $name)
                                 .focused($focusedField, equals: .name)
@@ -454,11 +469,12 @@ struct AddSymptomField: View {
                     HStack {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
-                        widgetBox {Button(action: {addSymptomField()}, label: {Text("Add")})}
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {Button(action: {addSymptomField()}, label: {Text("Add")})}
                             .frame(width: 100, height: 30)
                     }
                     .padding(.vertical)
-                    .foregroundStyle(Constants.Colours().buttonFill)
+                    .foregroundStyle(getColour(manager.constants.colours.buttonFill))
                 }
                 .padding(.horizontal)
             }
@@ -482,7 +498,8 @@ struct AddSymptomField: View {
             }
         }
         .navigationTitle("Add Field")  // title for screen
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.mainColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
     
     private func addSymptomField() {
@@ -514,7 +531,7 @@ struct UpdateSymptomFields: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             ScrollView {
@@ -528,7 +545,8 @@ struct UpdateSymptomFields: View {
                     }
                     
                     ForEach (fieldNames.indices, id: \.self) { name in
-                        widgetBox {
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {
                             HStack {
                                 TextField("Field name...", text: $fieldNames[name])
                                     .focused($focusedField, equals: .name)
@@ -545,7 +563,7 @@ struct UpdateSymptomFields: View {
                                     Button("Delete", role: .destructive) {
                                         delField()}
                                 }
-                                       .foregroundColor(Constants.Colours().buttonFill)
+                                       .foregroundColor(getColour(manager.constants.colours.buttonFill))
                             }
                         }
                     }
@@ -554,11 +572,12 @@ struct UpdateSymptomFields: View {
                     HStack {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
-                        widgetBox {Button(action: {updateFields()}, label: {Text("Save Changes")})}
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {Button(action: {updateFields()}, label: {Text("Save Changes")})}
                             .frame(width: 150, height: 30)
                     }
                     .padding(.vertical)
-                    .foregroundStyle(Constants.Colours().buttonFill)
+                    .foregroundStyle(getColour(manager.constants.colours.buttonFill))
                 }
                 .padding(.horizontal)
             }
@@ -582,7 +601,8 @@ struct UpdateSymptomFields: View {
             }
         }
         .navigationTitle("Symtpom Fields")  // title for screen
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.mainColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
     
     // save temporary state variable to actual manager
@@ -620,7 +640,7 @@ struct ExportLogs: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             ScrollView {
@@ -635,7 +655,8 @@ struct ExportLogs: View {
                     }
                     
                     // date selecters
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {
                             Text("Range start date ")
                             DatePicker("", selection: $startDate,
@@ -643,7 +664,8 @@ struct ExportLogs: View {
                                        displayedComponents: .date)
                         }
                     }
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {
                             Text("Range end date ")
                             DatePicker("", selection: $endDate,
@@ -656,13 +678,14 @@ struct ExportLogs: View {
                     HStack {
                         Button(action: {dismiss()}, label: {Text("Cancel")})
                         Spacer()
-                        widgetBox {
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.lightOutline)) {
                             NavigationLink(destination: {DisplayExportPDF(manager: manager, data: exportLogs())},
                                            label: {Text("Export")})}
                             .frame(width: 100, height: 30)
                     }
                     .padding(.vertical)
-                    .foregroundStyle(Constants.Colours().buttonFill)
+                    .foregroundStyle(getColour(manager.constants.colours.buttonFill))
                 }
                 .padding(.horizontal)
             }
@@ -673,7 +696,8 @@ struct ExportLogs: View {
             }
         }
         .navigationTitle("Export Logs")  // title for screen
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.mainColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
     
     // provides pdf document to view to be displayed

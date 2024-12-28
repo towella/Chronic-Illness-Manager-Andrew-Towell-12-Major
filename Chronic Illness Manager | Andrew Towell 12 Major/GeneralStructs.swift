@@ -11,6 +11,8 @@ import PDFKit
 // MARK: -- NAV BUTTON --
 // creates a navigation link with a given icon and destination view
 struct navButton<Destination: View>: View {
+    // must be observed in order to be auto updated on change of user settings
+    @ObservedObject var manager: IllnessManagerViewModel
     var icon: String  // icon for button
     @ViewBuilder var destination: Destination  // provide a destination view to open
     // create button as navlink
@@ -19,7 +21,7 @@ struct navButton<Destination: View>: View {
             destination: destination,
             label: {Label(icon, systemImage: icon)
                     .font(.largeTitle)
-                    .foregroundColor(Constants.Colours().buttonFill)
+                    .foregroundColor(getColour(manager.constants.colours.buttonFill))
                     .labelStyle(.iconOnly)
             })
     }
@@ -27,17 +29,20 @@ struct navButton<Destination: View>: View {
 
 // MARK: -- WIDGET BOX --
 struct widgetBox<Content: View>: View {
-    var borderColor = Constants.Colours().lightOutline  // var instead of let makes setting property optional when instantiating (defaults to set value if not passed)
+    // must be observed in order to be auto updated on change of user settings
+    @ObservedObject var manager: IllnessManagerViewModel
+    let borderColor: Color
     @ViewBuilder let content: Content
+    
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
-                .foregroundColor(Constants.Colours().lightBG)
+            RoundedRectangle(cornerRadius: manager.constants.widget.cornerRadius)
+                .foregroundColor(getColour(manager.constants.colours.lightColour))
             
-            RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
-                .strokeBorder(lineWidth: Constants.Widget().lineWidth)
+            RoundedRectangle(cornerRadius: manager.constants.widget.cornerRadius)
+                .strokeBorder(lineWidth: manager.constants.widget.lineWidth)
                 .foregroundColor(borderColor)
-                .shadow(radius: Constants.Widget().shadowRadius)
+                .shadow(radius: manager.constants.widget.shadowRadius)
             
             // Box Content
             content
@@ -50,10 +55,15 @@ struct widgetBox<Content: View>: View {
 // MARK: -- HELP BUTTON --
 struct helpButton: View {
     @State var showHelp: Bool = false
-    let manager: IllnessManagerViewModel
+    // must be observed in order to be auto updated on change of user settings
+    @ObservedObject var manager: IllnessManagerViewModel
     let screen: String
     var body: some View {
-        Button(action: {showHelp = true}, label: {Image(systemName: "questionmark.circle")})
+        Button(action: {showHelp = true}, 
+               label: {
+            Image(systemName: "questionmark.circle")
+                .foregroundColor(getColour(manager.constants.colours.buttonFill))
+        })
             .tint(.black)
             .alert(manager.getHelp(screen), isPresented: $showHelp) {Button("Ok", role: .cancel) {}}
     }
@@ -63,16 +73,20 @@ struct helpButton: View {
 // MARK: -- CHECKBOX --
 // https://www.kodeco.com/books/swiftui-cookbook/v1.0/chapters/2-create-a-checkbox-in-swiftui
 struct CheckboxToggleStyle: ToggleStyle {
-  func makeBody(configuration: Self.Configuration) -> some View {
-    HStack {
-      configuration.label
-      Spacer()
-      Image(systemName: configuration.isOn ? "checkmark.square" : "square")
-        .resizable()
-        .frame(width: 24, height: 24)
-        .onTapGesture { configuration.isOn.toggle() }
+
+    @ObservedObject var manager: IllnessManagerViewModel
+    
+    func makeBody(configuration: Self.Configuration) -> some View {
+        HStack {
+            configuration.label
+            Spacer()
+            Image(systemName: configuration.isOn ? "checkmark.square" : "square")
+                .resizable()
+                .foregroundColor(getColour(manager.constants.colours.buttonFill))
+                .frame(width: 24, height: 24)
+                .onTapGesture { configuration.isOn.toggle() }
+        }
     }
-  }
 }
 
 

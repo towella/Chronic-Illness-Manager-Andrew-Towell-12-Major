@@ -30,7 +30,7 @@ struct Settings: View {
                 Spacer()
             }
             .padding(4)
-            .background(Constants.Colours().darkPurple)
+            .background(getColour(manager.constants.colours.darkColour))
             .shadow(radius: 20)
             
             // Scroll section
@@ -46,18 +46,20 @@ struct Settings: View {
                 }
                 
                 HStack {
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         ColorPicker("Theme", selection: $themeColor)
                     }
                     .frame(width:170)
                     Spacer()
                 }
                 HStack {
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         Toggle(isOn: $useNotifs) {
                             Text("Notifications: ")
                         }
-                        .toggleStyle(CheckboxToggleStyle())
+                        .toggleStyle(CheckboxToggleStyle(manager: manager))
                     }
                     .frame(width:170)
                     Spacer()
@@ -74,19 +76,21 @@ struct Settings: View {
                 }
                 
                 HStack {
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         ColorPicker("Text Color", selection: $textColor)
                     }
                     .frame(width:170)
                     Spacer()
                 }
                 HStack {
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         HStack {
                             Toggle(isOn: $useWhiteIcons) {
                                 Text("White Icons: ")
                             }
-                            .toggleStyle(CheckboxToggleStyle())
+                            .toggleStyle(CheckboxToggleStyle(manager: manager))
                         }
                     }
                     .frame(width:170)
@@ -104,7 +108,8 @@ struct Settings: View {
                 }
                 VStack {
                     HStack {
-                        widgetBox(borderColor: Constants.Colours().danger) {
+                        widgetBox(manager: manager,
+                                  borderColor: getColour(manager.constants.colours.danger)) {
                             Button(action: {showReset = true},
                                    label: {Text("Reset to defaults")})
                             .alert("Reset to default", isPresented: $showReset) {
@@ -125,14 +130,15 @@ struct Settings: View {
                 HStack {
                     Button(action: {dismiss()}, label: {Text("Cancel")})
                     Spacer()
-                    widgetBox {
+                    widgetBox(manager: manager,
+                              borderColor: getColour(manager.constants.colours.lightOutline)) {
                         Button(action: {saveSettings()},
                                label: {Text("Save Settings")})
                     }
                     .frame(width: 150, height: 30)
                 }
                 .padding(.vertical)
-                .foregroundStyle(Constants.Colours().buttonFill)
+                .foregroundStyle(getColour(manager.constants.colours.buttonFill))
             }
             .padding(.horizontal)
             
@@ -140,7 +146,8 @@ struct Settings: View {
             Spacer() // take up all space
         }
         .navigationTitle("Settings")  // title for screen
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.mainColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
     
     private func saveSettings() {

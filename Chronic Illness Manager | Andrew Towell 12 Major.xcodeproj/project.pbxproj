@@ -16,8 +16,8 @@
 		2EA6419D2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA6419C2B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorTests.swift */; };
 		2EA641A72B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA641A62B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift */; };
 		2EA641A92B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA641A82B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift */; };
+		2EB61DD12D1E287D00E3C1C3 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB61DD02D1E287D00E3C1C3 /* Support.swift */; };
 		2EF0A4A42BA57EDC00C837B2 /* MedicationTimetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4A32BA57EDC00C837B2 /* MedicationTimetable.swift */; };
-		2EF0A4A62BA57F3C00C837B2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4A52BA57F3C00C837B2 /* Constants.swift */; };
 		2EF0A4A82BA57FB500C837B2 /* GeneralStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4A72BA57FB500C837B2 /* GeneralStructs.swift */; };
 		2EF0A4AA2BA5852000C837B2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4A92BA5852000C837B2 /* Settings.swift */; };
 		2EF0A4AC2BA5855700C837B2 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF0A4AB2BA5855700C837B2 /* Calendar.swift */; };
@@ -55,8 +55,8 @@
 		2EA641A22B952133001D09E4 /* Chronic Illness Manager | Andrew Towell 12 MajorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chronic Illness Manager | Andrew Towell 12 MajorUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EA641A62B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chronic_Illness_Manager___Andrew_Towell_12_MajorUITests.swift"; sourceTree = "<group>"; };
 		2EA641A82B952133001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Chronic_Illness_Manager___Andrew_Towell_12_MajorUITestsLaunchTests.swift"; sourceTree = "<group>"; };
+		2EB61DD02D1E287D00E3C1C3 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		2EF0A4A32BA57EDC00C837B2 /* MedicationTimetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationTimetable.swift; sourceTree = "<group>"; };
-		2EF0A4A52BA57F3C00C837B2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2EF0A4A72BA57FB500C837B2 /* GeneralStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralStructs.swift; sourceTree = "<group>"; };
 		2EF0A4A92BA5852000C837B2 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2EF0A4AB2BA5855700C837B2 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
@@ -119,12 +119,12 @@
 				2EF0A4AB2BA5855700C837B2 /* Calendar.swift */,
 				2EF0A4A92BA5852000C837B2 /* Settings.swift */,
 				2EF0A4A32BA57EDC00C837B2 /* MedicationTimetable.swift */,
-				2EF0A4A52BA57F3C00C837B2 /* Constants.swift */,
 				2EF0A4A72BA57FB500C837B2 /* GeneralStructs.swift */,
 				2EA6418F2B952133001D09E4 /* Assets.xcassets */,
 				2EA641912B952133001D09E4 /* Preview Content */,
 				2E5061AA2B9A66A6002F4A40 /* ManagerModel.swift */,
 				2E5061AC2B9A6797002F4A40 /* IllnessManagerViewModel.swift */,
+				2EB61DD02D1E287D00E3C1C3 /* Support.swift */,
 			);
 			path = "Chronic Illness Manager | Andrew Towell 12 Major";
 			sourceTree = "<group>";
@@ -284,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EB61DD12D1E287D00E3C1C3 /* Support.swift in Sources */,
 				2EF0A4B02BA5863700C837B2 /* SymptomLogger.swift in Sources */,
 				2EF0A4A42BA57EDC00C837B2 /* MedicationTimetable.swift in Sources */,
 				2EF0A4AC2BA5855700C837B2 /* Calendar.swift in Sources */,
@@ -294,7 +295,6 @@
 				2EF0A4A82BA57FB500C837B2 /* GeneralStructs.swift in Sources */,
 				2EA6418C2B952131001D09E4 /* Chronic_Illness_Manager___Andrew_Towell_12_MajorApp.swift in Sources */,
 				2E5061AB2B9A66A6002F4A40 /* ManagerModel.swift in Sources */,
-				2EF0A4A62BA57F3C00C837B2 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

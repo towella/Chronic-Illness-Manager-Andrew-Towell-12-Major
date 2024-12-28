@@ -11,20 +11,22 @@ import PDFKit
 // VIEW MODEL
 class IllnessManagerViewModel: ObservableObject {
     // Model which publishes changes via ViewModel to View
-    @Published private var manager = ManagerModel(settingsJson: nil, medJson: nil, logJson: nil)  // create default manager
+    @Published private var manager = ManagerModel(constantsJson: nil, settingsJson: nil, medJson: nil, logJson: nil)  // create default manager
     // Links to access local persistent data
+    private let constantsURL: URL    = URL.documentsDirectory.appendingPathComponent("constants.JSON")
     private let settingsURL: URL     = URL.documentsDirectory.appendingPathComponent("settings.JSON")
     private let medTimetableURL: URL = URL.documentsDirectory.appendingPathComponent("medTimetable.JSON")
     private let logHistoryURL: URL   = URL.documentsDirectory.appendingPathComponent("logHistory.JSON")
     
     init() {
         // load manager data from memory if able otherwise stick with default (Could be no data or error with data)
+        let constantsData    = try? Data(contentsOf: constantsURL)
         let settingsData     = try? Data(contentsOf: settingsURL)
         let logHistoryData   = try? Data(contentsOf: logHistoryURL)
         let medTimetableData = try? Data(contentsOf: medTimetableURL)
         
         // pass JSON to manager
-        manager = ManagerModel(settingsJson: settingsData, medJson: medTimetableData, logJson: logHistoryData)
+        manager = ManagerModel(constantsJson: constantsData, settingsJson: settingsData, medJson: medTimetableData, logJson: logHistoryData)
         
         // check for notification permissions on init then cue notifications for the day
         manager.checkNotifPerms()
@@ -47,6 +49,12 @@ class IllnessManagerViewModel: ObservableObject {
     }
     
     
+    // MARK: -- CONSTANTS --
+    var constants: ManagerModel.Constants {
+        manager.constants
+    }
+    
+    
     // MARK: -- SETTINGS --
     
     // computer var
@@ -56,6 +64,8 @@ class IllnessManagerViewModel: ObservableObject {
     
     func resetSettings() {
         manager.resetSettings()
+        save(manager.settings, to: settingsURL)
+        save(manager.constants, to: constantsURL)
     }
     
     func getDefaultSettings() -> ManagerModel.UserSettings.Defaults {
@@ -65,6 +75,7 @@ class IllnessManagerViewModel: ObservableObject {
     func saveSettings(theme: [Double], notifications: Bool, textColor: [Double], whiteIcons: Bool) {
         manager.updateSettings(theme: theme, notifications: notifications, textColor: textColor, whiteIcons: whiteIcons)
         save(manager.settings, to: settingsURL)
+        save(manager.constants, to: constantsURL)
     }
     
     

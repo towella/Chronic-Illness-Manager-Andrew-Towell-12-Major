@@ -23,7 +23,7 @@ struct MainMenu: View {
             VStack {
                 scrollBody
                 controlBar
-            }.background(Constants.Colours().darkPurple)
+            }.background(getColour(manager.constants.colours.darkColour))
         }
     }
     
@@ -35,19 +35,17 @@ struct MainMenu: View {
                     Text("Today's Plan!")
                         .font(.largeTitle)
                         .fontWeight(.bold)
+                        .foregroundColor(getColour(manager.constants.colours.textColor))
                     Spacer()
                     // settings values must be passed into the Settings view as they can not be
                     // initialised to specific values within an init function without being overwritten by
                     // default values in the main constructor >:(
-                    navButton(icon: "gearshape")
+                    // MUST GET DATA FROM SETTINGS NOT CONSTANTS
+                    navButton(manager: manager, icon: "gearshape")
                         {Settings(manager: manager,
-                                  themeColor: Color(red:   manager.settings.theme[0],
-                                                    green: manager.settings.theme[1],
-                                                    blue:  manager.settings.theme[2]),
+                                  themeColor: getColour(manager.settings.theme),
                                   useNotifs: manager.settings.notifications,
-                                  textColor: Color(red:    manager.settings.textColor[0],
-                                                   green:  manager.settings.textColor[1],
-                                                   blue:   manager.settings.textColor[2]),
+                                  textColor: getColour(manager.settings.textColor),
                                   useWhiteIcons: manager.settings.whiteIcons)}
                     helpButton(manager: manager, screen: "main_menu")
                 }
@@ -55,12 +53,15 @@ struct MainMenu: View {
                 dayPlanner
                 
                 // TODO: TEST ---------
-                widgetBox {
-                    HStack {Text("Notification example")
+                widgetBox(manager: manager,
+                          borderColor: getColour(manager.constants.colours.lightOutline)) {
+                    HStack {
+                        Text("Notification example")
                         DatePicker("", selection: $time,
                                    displayedComponents: .hourAndMinute)
-                    }}
-                Button("Set time") {
+                    }
+                }
+                Button("Set notifcation") {
                     manager.setNotification(time: time, alertName: "Test")
                     print("notif set")
                 }
@@ -68,19 +69,20 @@ struct MainMenu: View {
             }
             .padding(.horizontal)
         }
-        .background(Constants.Colours().lightPurple)
+        .background(getColour(manager.constants.colours.mainColour))
+        .foregroundColor(getColour(manager.constants.colours.textColor))
     }
     
     private var dayPlanner: some View {
 
         return ZStack {
-            RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
-                .foregroundColor(Constants.Colours().lightBG)
+            RoundedRectangle(cornerRadius: manager.constants.widget.cornerRadius)
+                .foregroundColor(getColour(manager.constants.colours.lightColour))
             
-            RoundedRectangle(cornerRadius: Constants.Widget().cornerRadius)
-                .strokeBorder(lineWidth: Constants.Widget().lineWidth)
-                .foregroundColor(Constants.Colours().lightOutline)
-                .shadow(radius: Constants.Widget().shadowRadius)
+            RoundedRectangle(cornerRadius: manager.constants.widget.cornerRadius)
+                .strokeBorder(lineWidth: manager.constants.widget.lineWidth)
+                .foregroundColor(getColour(manager.constants.colours.lightOutline))
+                .shadow(radius: manager.constants.widget.shadowRadius)
             VStack {
                 Text("12am                                                                 ")
                 Spacer()
@@ -99,18 +101,18 @@ struct MainMenu: View {
         // Bottom Buttons
         HStack {
             Spacer()
-            navButton(icon: "folder") {MedicalRecords()}
+            navButton(manager: manager, icon: "folder") {MedicalRecords(manager)}
             Spacer()
-            navButton(icon: "calendar") {Calendar()}
+            navButton(manager: manager, icon: "calendar") {Calendar(manager)}
             Spacer()
-            navButton(icon: "plus.app") {AddLog(manager)}
+            navButton(manager: manager, icon: "plus.app") {AddLog(manager)}
             Spacer()
-            navButton(icon: "list.bullet") {SymptomLogger(manager)}
+            navButton(manager: manager, icon: "list.bullet") {SymptomLogger(manager)}
             Spacer()
-            navButton(icon: "pill") {MedicationTimetable(manager)}
+            navButton(manager: manager, icon: "pill") {MedicationTimetable(manager)}
             Spacer()
         }
-        .background(Constants.Colours().darkPurple)
+        .background(getColour(manager.constants.colours.darkColour))
         .shadow(radius: 20)
     }
     
