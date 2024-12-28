@@ -125,6 +125,7 @@ struct MedicationTimetable: View {
                         .padding()
                 }
             }
+            .padding(.horizontal, 5)
         }
             .navigationTitle("Med Timetable")  // title for screen
             .toolbar {
@@ -434,7 +435,7 @@ struct UpdateAlert: View {
             }
         }
         .navigationTitle("Medication Alert")  // title for screen
-        .background(getColour(manager.constants.colours.lightColour))
+        .background(getColour(manager.constants.colours.mainColour))
         .foregroundColor(getColour(manager.constants.colours.textColor))
     }
         
